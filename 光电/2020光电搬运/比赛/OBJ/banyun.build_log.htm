@@ -1,0 +1,341 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.22.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 1314 微软用户, 微软中国, LIC=TIV9U-S3H90-XUQ41-C8B55-U8XH4-WUFSU
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.22
+Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.22
+Dialog DLL:      DCM.DLL V1.13.9.0
+Target DLL:      UL2CM3.DLL V1.159.0.0
+Dialog DLL:      TCM.DLL V1.21.0.0
+ 
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\调试\比赛\USER\banyun.uvprojx
+Project File Date:  04/10/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+compiling sys.c...
+compiling usart.c...
+compiling delay.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+..\HARDWARE\track.h(25): warning:  #1295-D: Deprecated declaration qian - give arg types
+  void qian();
+..\HARDWARE\track.h(27): warning:  #1295-D: Deprecated declaration track - give arg types
+  void track();
+..\HARDWARE\track.h(28): warning:  #1295-D: Deprecated declaration track_1 - give arg types
+  void track_1();
+..\HARDWARE\track.h(29): warning:  #1295-D: Deprecated declaration track_back - give arg types
+  void track_back();
+..\HARDWARE\track.h(31): warning:  #1295-D: Deprecated declaration test_qian - give arg types
+  void test_qian();
+..\HARDWARE\track.h(32): warning:  #1295-D: Deprecated declaration test_hou - give arg types
+  void test_hou();
+..\HARDWARE\track.h(33): warning:  #1295-D: Deprecated declaration test_hou1 - give arg types
+  void test_hou1();
+..\HARDWARE\track.h(34): warning:  #1295-D: Deprecated declaration test_right - give arg types
+  void test_right();
+..\HARDWARE\track.h(35): warning:  #1295-D: Deprecated declaration test_left - give arg types
+  void test_left();
+..\HARDWARE\track.h(37): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\track.h(38): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\track.h(40): warning:  #1295-D: Deprecated declaration turn2 - give arg types
+  void turn2();//转角检测
+..\HARDWARE\track.h(41): warning:  #1295-D: Deprecated declaration turn3 - give arg types
+  void turn3();//转角检测
+..\HARDWARE\track.h(42): warning:  #1295-D: Deprecated declaration test_zhong - give arg types
+  void test_zhong();
+..\HARDWARE\track.h(43): warning:  #1295-D: Deprecated declaration test_no - give arg types
+  void test_no();
+..\HARDWARE\track.h(45): warning:  #1295-D: Deprecated declaration test_go - give arg types
+  void test_go();
+..\HARDWARE\track.h(46): warning:  #1295-D: Deprecated declaration test_left1 - give arg types
+  void test_left1();//houtuiyoubian中点检测
+..\HARDWARE\track.h(47): warning:  #1295-D: Deprecated declaration turn_adust - give arg types
+  void turn_adust();
+..\SYSTEM\delay\delay.c: 20 warnings, 0 errors
+compiling TRACK.c...
+..\HARDWARE\TRACK.h(25): warning:  #1295-D: Deprecated declaration qian - give arg types
+  void qian();
+..\HARDWARE\TRACK.h(27): warning:  #1295-D: Deprecated declaration track - give arg types
+  void track();
+..\HARDWARE\TRACK.h(28): warning:  #1295-D: Deprecated declaration track_1 - give arg types
+  void track_1();
+..\HARDWARE\TRACK.h(29): warning:  #1295-D: Deprecated declaration track_back - give arg types
+  void track_back();
+..\HARDWARE\TRACK.h(31): warning:  #1295-D: Deprecated declaration test_qian - give arg types
+  void test_qian();
+..\HARDWARE\TRACK.h(32): warning:  #1295-D: Deprecated declaration test_hou - give arg types
+  void test_hou();
+..\HARDWARE\TRACK.h(33): warning:  #1295-D: Deprecated declaration test_hou1 - give arg types
+  void test_hou1();
+..\HARDWARE\TRACK.h(34): warning:  #1295-D: Deprecated declaration test_right - give arg types
+  void test_right();
+..\HARDWARE\TRACK.h(35): warning:  #1295-D: Deprecated declaration test_left - give arg types
+  void test_left();
+..\HARDWARE\TRACK.h(37): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(38): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(40): warning:  #1295-D: Deprecated declaration turn2 - give arg types
+  void turn2();//转角检测
+..\HARDWARE\TRACK.h(41): warning:  #1295-D: Deprecated declaration turn3 - give arg types
+  void turn3();//转角检测
+..\HARDWARE\TRACK.h(42): warning:  #1295-D: Deprecated declaration test_zhong - give arg types
+  void test_zhong();
+..\HARDWARE\TRACK.h(43): warning:  #1295-D: Deprecated declaration test_no - give arg types
+  void test_no();
+..\HARDWARE\TRACK.h(45): warning:  #1295-D: Deprecated declaration test_go - give arg types
+  void test_go();
+..\HARDWARE\TRACK.h(46): warning:  #1295-D: Deprecated declaration test_left1 - give arg types
+  void test_left1();//houtuiyoubian中点检测
+..\HARDWARE\TRACK.h(47): warning:  #1295-D: Deprecated declaration turn_adust - give arg types
+  void turn_adust();
+..\USER\speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+..\HARDWARE\TRACK.c(175): warning:  #223-D: function "Turn_weizhuan" declared implicitly
+  				Turn_weizhuan(0);
+..\HARDWARE\TRACK.c(189): warning:  #223-D: function "Turn_weizhuan" declared implicitly
+  				Turn_weizhuan(1);
+..\HARDWARE\TRACK.c(201): warning:  #223-D: function "Turn90" declared implicitly
+  	Turn90(0,970);  //90°
+..\HARDWARE\TRACK.c: 24 warnings, 0 errors
+compiling stm32f10x_it.c...
+compiling TCS3200.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+TCS3200.c: 2 warnings, 0 errors
+compiling main.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+..\HARDWARE\TRACK.h(25): warning:  #1295-D: Deprecated declaration qian - give arg types
+  void qian();
+..\HARDWARE\TRACK.h(27): warning:  #1295-D: Deprecated declaration track - give arg types
+  void track();
+..\HARDWARE\TRACK.h(28): warning:  #1295-D: Deprecated declaration track_1 - give arg types
+  void track_1();
+..\HARDWARE\TRACK.h(29): warning:  #1295-D: Deprecated declaration track_back - give arg types
+  void track_back();
+..\HARDWARE\TRACK.h(31): warning:  #1295-D: Deprecated declaration test_qian - give arg types
+  void test_qian();
+..\HARDWARE\TRACK.h(32): warning:  #1295-D: Deprecated declaration test_hou - give arg types
+  void test_hou();
+..\HARDWARE\TRACK.h(33): warning:  #1295-D: Deprecated declaration test_hou1 - give arg types
+  void test_hou1();
+..\HARDWARE\TRACK.h(34): warning:  #1295-D: Deprecated declaration test_right - give arg types
+  void test_right();
+..\HARDWARE\TRACK.h(35): warning:  #1295-D: Deprecated declaration test_left - give arg types
+  void test_left();
+..\HARDWARE\TRACK.h(37): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(38): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(40): warning:  #1295-D: Deprecated declaration turn2 - give arg types
+  void turn2();//转角检测
+..\HARDWARE\TRACK.h(41): warning:  #1295-D: Deprecated declaration turn3 - give arg types
+  void turn3();//转角检测
+..\HARDWARE\TRACK.h(42): warning:  #1295-D: Deprecated declaration test_zhong - give arg types
+  void test_zhong();
+..\HARDWARE\TRACK.h(43): warning:  #1295-D: Deprecated declaration test_no - give arg types
+  void test_no();
+..\HARDWARE\TRACK.h(45): warning:  #1295-D: Deprecated declaration test_go - give arg types
+  void test_go();
+..\HARDWARE\TRACK.h(46): warning:  #1295-D: Deprecated declaration test_left1 - give arg types
+  void test_left1();//houtuiyoubian中点检测
+..\HARDWARE\TRACK.h(47): warning:  #1295-D: Deprecated declaration turn_adust - give arg types
+  void turn_adust();
+speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\HARDWARE\gouzi.h(14): warning:  #1295-D: Deprecated declaration left_zhua - give arg types
+  void left_zhua();
+..\HARDWARE\gouzi.h(15): warning:  #1295-D: Deprecated declaration left_fang - give arg types
+  void left_fang();
+..\HARDWARE\gouzi.h(16): warning:  #1295-D: Deprecated declaration right_zhua - give arg types
+  void right_zhua();
+..\HARDWARE\gouzi.h(17): warning:  #1295-D: Deprecated declaration right_fang - give arg types
+  void right_fang();
+main.c(457): warning:  #1-D: last line of file ends without a newline
+  }
+main.c(20): warning:  #177-D: variable "n1"  was declared but never referenced
+    u16 n=0,n1=0,n2=0,n3=0,left,right,a1,c1,e1;
+main.c(20): warning:  #177-D: variable "n2"  was declared but never referenced
+    u16 n=0,n1=0,n2=0,n3=0,left,right,a1,c1,e1;
+main.c(20): warning:  #177-D: variable "n3"  was declared but never referenced
+    u16 n=0,n1=0,n2=0,n3=0,left,right,a1,c1,e1;
+main.c(20): warning:  #177-D: variable "left"  was declared but never referenced
+    u16 n=0,n1=0,n2=0,n3=0,left,right,a1,c1,e1;
+main.c(20): warning:  #177-D: variable "right"  was declared but never referenced
+    u16 n=0,n1=0,n2=0,n3=0,left,right,a1,c1,e1;
+main.c: 31 warnings, 0 errors
+compiling system_stm32f10x.c...
+compiling exit.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+exit.c: 2 warnings, 0 errors
+compiling speed.c...
+speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+speed.c: 3 warnings, 0 errors
+compiling turn.c...
+speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+turn.c: 3 warnings, 0 errors
+compiling direction.c...
+speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+direction.c: 3 warnings, 0 errors
+compiling port.c...
+compiling PWM.c...
+compiling led.c...
+compiling gouzi.c...
+..\HARDWARE\gouzi.h(14): warning:  #1295-D: Deprecated declaration left_zhua - give arg types
+  void left_zhua();
+..\HARDWARE\gouzi.h(15): warning:  #1295-D: Deprecated declaration left_fang - give arg types
+  void left_fang();
+..\HARDWARE\gouzi.h(16): warning:  #1295-D: Deprecated declaration right_zhua - give arg types
+  void right_zhua();
+..\HARDWARE\gouzi.h(17): warning:  #1295-D: Deprecated declaration right_fang - give arg types
+  void right_fang();
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+..\USER\speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\HARDWARE\gouzi.c(114): warning:  #1-D: last line of file ends without a newline
+  	
+..\HARDWARE\gouzi.c: 8 warnings, 0 errors
+compiling move.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+speed.h(7): warning:  #1295-D: Deprecated declaration stop - give arg types
+  void stop();
+..\HARDWARE\TRACK.h(25): warning:  #1295-D: Deprecated declaration qian - give arg types
+  void qian();
+..\HARDWARE\TRACK.h(27): warning:  #1295-D: Deprecated declaration track - give arg types
+  void track();
+..\HARDWARE\TRACK.h(28): warning:  #1295-D: Deprecated declaration track_1 - give arg types
+  void track_1();
+..\HARDWARE\TRACK.h(29): warning:  #1295-D: Deprecated declaration track_back - give arg types
+  void track_back();
+..\HARDWARE\TRACK.h(31): warning:  #1295-D: Deprecated declaration test_qian - give arg types
+  void test_qian();
+..\HARDWARE\TRACK.h(32): warning:  #1295-D: Deprecated declaration test_hou - give arg types
+  void test_hou();
+..\HARDWARE\TRACK.h(33): warning:  #1295-D: Deprecated declaration test_hou1 - give arg types
+  void test_hou1();
+..\HARDWARE\TRACK.h(34): warning:  #1295-D: Deprecated declaration test_right - give arg types
+  void test_right();
+..\HARDWARE\TRACK.h(35): warning:  #1295-D: Deprecated declaration test_left - give arg types
+  void test_left();
+..\HARDWARE\TRACK.h(37): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(38): warning:  #1295-D: Deprecated declaration turn180 - give arg types
+  void turn180();
+..\HARDWARE\TRACK.h(40): warning:  #1295-D: Deprecated declaration turn2 - give arg types
+  void turn2();//转角检测
+..\HARDWARE\TRACK.h(41): warning:  #1295-D: Deprecated declaration turn3 - give arg types
+  void turn3();//转角检测
+..\HARDWARE\TRACK.h(42): warning:  #1295-D: Deprecated declaration test_zhong - give arg types
+  void test_zhong();
+..\HARDWARE\TRACK.h(43): warning:  #1295-D: Deprecated declaration test_no - give arg types
+  void test_no();
+..\HARDWARE\TRACK.h(45): warning:  #1295-D: Deprecated declaration test_go - give arg types
+  void test_go();
+..\HARDWARE\TRACK.h(46): warning:  #1295-D: Deprecated declaration test_left1 - give arg types
+  void test_left1();//houtuiyoubian中点检测
+..\HARDWARE\TRACK.h(47): warning:  #1295-D: Deprecated declaration turn_adust - give arg types
+  void turn_adust();
+..\HARDWARE\gouzi.h(14): warning:  #1295-D: Deprecated declaration left_zhua - give arg types
+  void left_zhua();
+..\HARDWARE\gouzi.h(15): warning:  #1295-D: Deprecated declaration left_fang - give arg types
+  void left_fang();
+..\HARDWARE\gouzi.h(16): warning:  #1295-D: Deprecated declaration right_zhua - give arg types
+  void right_zhua();
+..\HARDWARE\gouzi.h(17): warning:  #1295-D: Deprecated declaration right_fang - give arg types
+  void right_fang();
+move.c: 25 warnings, 0 errors
+assembling startup_stm32f10x_hd.s...
+compiling core_cm3.c...
+compiling misc.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_iwdg.c...
+compiling usmart.c...
+compiling stm32f10x_flash.c...
+compiling usmart_config.c...
+..\SYSTEM\delay\delay.h(37): warning:  #1295-D: Deprecated declaration delay_s - give arg types
+  void delay_s();
+..\SYSTEM\delay\delay.h(38): warning:  #1295-D: Deprecated declaration delay_gs - give arg types
+  void delay_gs();
+..\USMART\usmart_config.c: 2 warnings, 0 errors
+compiling usmart_str.c...
+linking...
+Program Size: Code=26598 RO-data=534 RW-data=400 ZI-data=1832  
+FromELF: creating hex file...
+"..\OBJ\banyun.axf" - 0 Error(s), 123 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.0.0.pack
+                ARM::CMSIS:CORE:5.0.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.0.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\Administrator\Desktop\调试\比赛\USER\RTE\_Target_1
+  D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0\CMSIS\Include
+  D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.0.0
+Build Time Elapsed:  00:00:13
+</pre>
+</body>
+</html>

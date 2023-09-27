@@ -1,0 +1,195 @@
+/*******************************************
+* 文件名：TCS230.c
+* 功能： 读取RGB值
+* 说明： 
+* 时间：2011-3-20
+/********************************************/
+#include <reg51.h>
+#include <intrins.h>
+
+#define uchar unsigned char
+#define uint unsigned int
+
+/**引脚定义**/
+//sbit oe=P1^0;    
+//sbit s0=P1^2;
+//sbit s1=P1^3;
+sbit s2=P1^5;
+sbit s3=P1^4;
+
+//变量、常量定义
+
+long int color,red,green,blue;
+long int disp_tc;    
+long int buf_cor;    //颜色值
+
+uint rp=3,gp=6,bp=3;    //定义比例因子
+
+uchar disp_p;    //颜色标志位（0:红 1:绿 2:蓝）
+
+
+//数组
+
+uchar disp_buf[3]={0xff,0xff,0xff};    //临时保存当前的色值
+
+uchar code table[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0x08,0x42,0x00};/*数码管花数*/
+uchar code scan[4]={0x8f,0x4f,0x2f,0x0f};    /*数码管位选*/
+
+/*******************************************
+* 函数名称: t0_init()
+* 函数功能: 定时器0初始化
+* 入口参数: 无
+* 出口参数: 无
+/********************************************/
+void t0_init()
+{
+     TMOD=0x51;        //T1计数 T0定时 工作方式1
+
+     TH0=0x3C;        //定时50ms
+
+     TL0=0xB0;
+     TH1=0xFF;        //计数初值
+
+     TL1=0x9C;
+     EA=1;            //开中断
+
+     ET0=1;        
+     TR0=1;            //启动
+
+     TR1=1;
+}
+
+/*******************************************
+* 函数名称: delay_1ms(uint w)
+* 函数功能: 延时1mx
+* 入口参数: 无符号整形W
+* 出口参数: 无
+/********************************************/
+void delay_1ms(uint w)    
+{
+     uint y,z;
+     for(z=w;z>0;z--)
+        for(y=100;y>0;y--);
+}
+
+/*******************************************
+* 函数名称: feed_buf()
+* 函数功能: 根据颜色标志位disp_p，读取当前检测
+            到的色值，并保存到disp_buf[]
+* 入口参数: 无
+* 出口参数: 无
+/********************************************/
+void feed_buf()
+{
+    //依次读取红、绿、蓝色值
+
+     if(disp_p==0)
+        {red=buf_cor/rp;color=red;}    //读取红色值         
+
+     else if(disp_p==1)
+        {green=buf_cor/gp;color=green;}
+     else if(disp_p==2)
+        {blue=buf_cor/bp;color=blue;}
+            
+     disp_buf[0]=color/100;
+     disp_buf[1]=(color-100*disp_buf[0])/10;
+     disp_buf[2]=color%10;
+ }
+
+/*******************************************
+* 函数名称: display()
+* 函数功能: 数码管显示
+* 入口参数: 无
+* 出口参数: 无
+/********************************************/
+void display()
+{
+   uchar i;
+   for(i=0;i<3;i++)
+   {
+        if(disp_p==0&&i==0)
+            {P0=table[10];P2=scan[0];delay_1ms(2);P2=0xff;}
+        else if(disp_p==1&&i==0)
+            {P0=table[11];P2=scan[0];delay_1ms(2);P2=0xff;}
+        else if(disp_p==2&&i==0)
+            {P0=table[12];P2=scan[0];delay_1ms(2);P2=0xff;}
+        else if(i<=3)
+            {P0=table[disp_buf[i-1]];P2=scan[i];delay_1ms(2);P2=0xff;}
+   }
+}
+
+/*******************************************
+* 函数名称: main()
+/********************************************/
+void main()
+{
+     oe=0;        //使能TCS230
+
+     s0=1; s1=1;    //选择输出比例因子100%
+
+     t0_init();        //定时计数初使化
+
+     while(1)
+     {
+        display();
+     }
+}
+
+ /*******************************************
+* 函数名称: c10ms_out() 
+* 函数功能: 定时中断0服务程序
+            修改颜色标志disp_tc（0:红 1:绿 2:蓝）
+            设置S0 S1 S2 选择滤波器
+            计算脉冲，读取色值
+* 入口参数: 无
+* 出口参数: 无
+/********************************************/
+void c10ms_out() interrupt 1
+{
+   TR0=0;    //关闭定时
+
+   TR1=0;    //关闭计数
+
+
+   disp_tc+=1;//实现先检测绿色,再检测蓝色,然后检测红色,循环检测
+
+   
+   if(disp_tc==100)
+   {
+        disp_tc=0;
+        if(disp_p==0)
+        {
+            disp_p+=1;    
+            s2=1;s3=1;    //选择滤波器为绿色            
+
+        } 
+        else if(disp_p==1)
+        {            
+            disp_p+=1;
+            s2=1;s3=0;    //选择滤波器为蓝色
+
+        }
+        else if(disp_p==2)
+        {            
+            disp_p=0;
+            s2=0;s3=0;    //选择滤波器为红色
+
+        }
+    }
+    
+    if(disp_tc%10==0)
+    {
+        buf_cor=TH1*256+TL1;    //计算这段时间内 TCS230 的输出脉冲数
+
+        feed_buf();
+    }
+    
+    //重赋初值
+
+     TH0=0xB0;
+     TL0=0x3C;
+     TL1=0x00;
+     TH1=0x00;
+     TR0=1;
+     TR1=1;
+ }

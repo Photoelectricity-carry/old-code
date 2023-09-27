@@ -1,0 +1,41 @@
+..\obj\truck.o: ..\HARDWARE\truck\truck.c
+..\obj\truck.o: ..\HARDWARE\truck\truck.h
+..\obj\truck.o: ..\USER\stm32f4xx.h
+..\obj\truck.o: ..\CORE\core_cm4.h
+..\obj\truck.o: D:\Program Files\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdint.h
+..\obj\truck.o: ..\CORE\core_cmInstr.h
+..\obj\truck.o: ..\CORE\core_cmFunc.h
+..\obj\truck.o: ..\CORE\core_cm4_simd.h
+..\obj\truck.o: ..\USER\system_stm32f4xx.h
+..\obj\truck.o: ..\USER\stm32f4xx_conf.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_adc.h
+..\obj\truck.o: ..\USER\stm32f4xx.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_crc.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_dbgmcu.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_dma.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_exti.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_flash.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_gpio.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_i2c.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_iwdg.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_pwr.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_rcc.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_rtc.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_sdio.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_spi.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_syscfg.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_tim.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_usart.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_wwdg.h
+..\obj\truck.o: ..\FWLIB\inc\misc.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_cryp.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_hash.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_rng.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_can.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_dac.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
+..\obj\truck.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\truck.o: ..\SYSTEM\sys\sys.h
+..\obj\truck.o: ..\SYSTEM\delay\delay.h
+..\obj\truck.o: D:\Program Files\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\string.h
+..\obj\truck.o: D:\Program Files\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdlib.h

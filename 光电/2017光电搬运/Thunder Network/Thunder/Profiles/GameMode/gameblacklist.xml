@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<games>
+			<game pprocess="Photoshop.exe" />
+			<game pprocess="Premiere.exe" />
+			<game pprocess="vmware.exe" />
+			<game pprocess="avp.exe" />
+			<game pprocess="ashDisp.exe" />
+			<game pprocess="ccSvrHst.exe" />
+			<game pprocess="avcenter.exe" />
+			<game pprocess="secenter.exe" />
+			<game pprocess="spiderui.exe" />
+			<game pprocess="egui.exe" />
+			<game pprocess="ekrn.exe" />
+			<game pprocess="mcupdui.exe" />
+			<game pprocess="KvMonXP.exe" />
+			<game pprocess="RavMon.exe" />
+			<game pprocess="kavstart.exe" />
+			<game pprocess="360sd.exe" />
+			<game pprocess="FilMsg.exe" />
+			<game pprocess="Navapw32.exe" />
+			<game pprocess="Navapsvc.exe" />
+			<game pprocess="PFW.exe" />
+			<game pprocess="Iparmor.exe" />
+			<game pprocess="KAVsvc.exe" />
+			<game pprocess="KAVsvcUI.exe" />
+			<game pprocess="rising.exe" />
+			<game pprocess="RAVmonD.exe" />
+			<game pprocess="rav.exe" />
+			<game pprocess="KVFW.EXE" />
+			<game pprocess="KVsrvXP.exe" />
+			<game pprocess="KVwsc.exe" />
+	</games>

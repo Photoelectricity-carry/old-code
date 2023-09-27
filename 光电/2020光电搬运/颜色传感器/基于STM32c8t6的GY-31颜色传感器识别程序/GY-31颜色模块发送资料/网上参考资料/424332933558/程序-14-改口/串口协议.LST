@@ -1,0 +1,50 @@
+C51 COMPILER V7.06   __口__议                                                              05/17/2005 11:27:13 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE __口__议
+OBJECT MODULE PLACED IN 串口协议.OBJ
+COMPILER INVOKED BY: D:\Keilk\C51\BIN\C51.EXE 串口协议.C BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          //ISD51仿真软件的使用源程序
+   2          
+   3          //例程见下：
+   4          #include <reg51.h>
+   5          
+   6          //#define uchar unsigned char
+   7          
+   8          
+   9          
+  10          
+  11          //串口初始化程序
+  12          void InitUart(char bps){
+  13   1      SCON  = 0x50; /* SCON: mode 1, 8-bit UART, enable rcvr      */
+  14   1              TMOD |= 0x20; /* TMOD: timer 1, mode 2, 8-bit reload        */
+  15   1              if (bps==1) TH1=0xE8;  //BPS=1200
+  16   1                      if (bps==2) TH1=0xF4 ;//BPS=2400
+  17   1                              if (bps==3)  TH1=0xFA;//BPS=4800
+  18   1                                      if (bps==4)  TH1 =0xFD;//BPS=9600
+  19   1                                              if (bps==5) {
+  20   2      PCON |=0x80;//BPS=19。2K
+  21   2      TH1 =0xFd;
+  22   2      }
+  23   1              TL1=TH1;
+  24   1      TR1   = 1;    /* TR1:  timer 1 run                          */
+  25   1              TI    = 1;    /* TI:   set TI to send first char of UART    */
+  26   1      }
+  27          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     47    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

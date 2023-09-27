@@ -1,0 +1,9 @@
+#ifndef EXIT_INIT_H
+#define EXIT_INIT_H
+#include "main.h"
+
+extern void GPIOB_Exti8_GPIO_Init(void);
+extern void EXTIX_Init_1(void);
+extern void EXTIX_Init_2(void);
+
+#endif

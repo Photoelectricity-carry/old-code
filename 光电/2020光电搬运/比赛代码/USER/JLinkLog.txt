@@ -1,0 +1,28 @@
+
+T15A4 000:113 SEGGER J-Link V6.10i Log File (0001ms, 0080ms total)
+T15A4 000:113 DLL Compiled: Oct 25 2016 19:31:51 (0001ms, 0080ms total)
+T15A4 000:113 Logging started @ 2019-04-18 07:45 (0001ms, 0080ms total)
+T15A4 000:114 JLINK_SetWarnOutHandler(...) (0000ms, 0080ms total)
+T15A4 000:114 JLINK_OpenEx(...)
+Firmware: J-Link ARM V8 compiled Nov 28 2014 13:44:46
+Hardware: V8.00
+S/N: 791950130
+Feature(s): RDI,FlashDL,FlashBP,JFlash,GDBFullWEBSRV Webserver running on local port 19080 (0059ms, 0139ms total)
+T15A4 000:114   returns O.K. (0059ms, 0139ms total)
+T15A4 000:173 JLINK_SetErrorOutHandler(...) (0000ms, 0139ms total)
+T15A4 000:173 JLINK_ExecCommand("ProjectFile = "C:\Users\Administrator\Desktop\µ÷ÊÔ\±ÈÈü\USER\JLinkSettings.ini"", ...). Device "ARM7" selected.  returns 0x00 (0126ms, 0265ms total)
+T15A4 000:303 JLINK_ExecCommand("Device = STM32F103ZE", ...). Device "STM32F103ZE" selected.  returns 0x00 (0006ms, 0272ms total)
+T15A4 000:309 JLINK_ExecCommand("DisableConnectionTimeout", ...).   returns 0x01 (0000ms, 0273ms total)
+T15A4 000:310 JLINK_GetHardwareVersion()  returns 0x13880 (0000ms, 0273ms total)
+T15A4 000:310 JLINK_GetDLLVersion()  returns 61009 (0000ms, 0273ms total)
+T15A4 000:310 JLINK_GetFirmwareString(...) (0000ms, 0273ms total)
+T15A4 000:320 JLINK_GetDLLVersion()  returns 61009 (0000ms, 0273ms total)
+T15A4 000:320 JLINK_GetCompileDateTime() (0000ms, 0273ms total)
+T15A4 000:324 JLINK_GetFirmwareString(...) (0000ms, 0273ms total)
+T15A4 000:327 JLINK_GetHardwareVersion()  returns 0x13880 (0000ms, 0273ms total)
+T15A4 000:340 JLINK_TIF_Select(JLINKARM_TIF_JTAG)  returns 0x00 (0007ms, 0280ms total)
+T15A4 000:347 JLINK_SetSpeed(1000) (0001ms, 0281ms total)
+T15A4 000:348 JLINK_GetIdData(...) (0001ms, 0282ms total)
+T15A4 001:844 JLINK_Close() (0013ms, 0295ms total)
+T15A4 001:844  (0013ms, 0295ms total)
+T15A4 001:844 Closed (0013ms, 0295ms total)

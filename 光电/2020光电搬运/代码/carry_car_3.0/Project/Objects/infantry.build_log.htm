@@ -1,0 +1,55 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: qilin qilin, qilin, LIC=S5ISZ-JHWJW-35NTX-HRSBY-9WMZN-852AZ
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.14.0.0
+Toolchain Path:  D:\K5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+F:\2020光电搬运\代码\carry_car_3.0\Project\standard.uvprojx
+Project File Date:  09/25/2020
+
+<h2>Output:</h2>
+Build target 'standard'
+compiling start_task.c...
+compiling gimbal_task.c...
+..\user\APP\gimbal_task\gimbal_task.c(88): warning:  #1295-D: Deprecated declaration chassis_gary_loop - give arg types
+  void chassis_gary_loop();
+..\user\APP\gimbal_task\gimbal_task.c(833): warning:  #1294-D: Old-style function chassis_turn_ready
+  int chassis_turn_ready(dd)
+..\user\APP\gimbal_task\gimbal_task.c(833): warning:  #1079-D: standard requires that parameter "dd" be given a type by a subsequent declaration ("int" assumed)
+  int chassis_turn_ready(dd)
+..\user\APP\gimbal_task\gimbal_task.c(42): warning:  #177-D: function "chassis_move_angle_1" was declared but never referenced
+  static void chassis_move_angle_1(void);
+..\user\APP\gimbal_task\gimbal_task.c(44): warning:  #177-D: function "chassis_move_angle_2" was declared but never referenced
+  static void chassis_move_angle_2(void);
+..\user\APP\gimbal_task\gimbal_task.c: 5 warnings, 0 errors
+compiling shoot.c...
+linking...
+Program Size: Code=22272 RO-data=472 RW-data=284 ZI-data=133884  
+FromELF: creating hex file...
+".\Objects\infantry.axf" - 0 Error(s), 5 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  F:\2020光电搬运\代码\carry_car_3.0\Project\RTE
+  D:\K5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>

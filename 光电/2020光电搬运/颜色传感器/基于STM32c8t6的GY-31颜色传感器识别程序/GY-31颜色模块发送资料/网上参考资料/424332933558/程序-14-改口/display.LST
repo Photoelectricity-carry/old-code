@@ -1,0 +1,104 @@
+C51 COMPILER V7.06   DISPLAY                                                               06/22/2005 10:11:51 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE DISPLAY
+OBJECT MODULE PLACED IN display.OBJ
+COMPILER INVOKED BY: D:\Keilk\C51\BIN\C51.EXE display.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #include <string.h>
+   3          #include<intrins.h>
+   4          /*新板*/
+   5          sbit SCK=P3^7; //移位脉冲
+   6          sbit RCK=P2^0;
+   7          sbit SER=P1^0;//DA
+   8           
+   9          /*以下为数码管显示*/
+  10          
+  11          zell()
+  12          {
+  13   1       SER=0;
+  14   1       SCK=1;
+  15   1       _nop_();
+  16   1       _nop_();
+  17   1       _nop_();
+  18   1       _nop_(); 
+  19   1       _nop_();
+  20   1       _nop_();
+  21   1       _nop_();
+  22   1       _nop_(); 
+  23   1       SCK=0;
+  24   1      
+  25   1      
+  26   1      }
+  27          flas()
+  28          { SER=1;
+  29   1        SCK=1;
+  30   1       _nop_();
+  31   1       _nop_();
+  32   1       _nop_();
+  33   1       _nop_(); 
+  34   1       _nop_();
+  35   1       _nop_();
+  36   1       _nop_();
+  37   1       _nop_(); 
+  38   1        SCK=0;
+  39   1      }
+  40          
+  41          void byte(unsigned char r) 
+  42          { 
+  43   1      unsigned char i,r1;
+  44   1      for(i=0;i<8;i++)
+  45   1         {
+  46   2          r1=r&0x80;
+  47   2          if(r1==0)
+  48   2             zell();  
+  49   2          else flas(); 
+  50   2      
+  51   2          r=r<<1;
+  52   2         } 
+  53   1      }
+  54          display(unsigned int x)
+  55          {
+C51 COMPILER V7.06   DISPLAY                                                               06/22/2005 10:11:51 PAGE 2   
+
+  56   1       unsigned char year,i;          
+  57   1       code  unsigned char list[16]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0x88,0x83,0xc6,0xa1,0x86,
+             -0x8e};
+  58   1                                  //   0    1    2    3    4    5    6    7    8    9    a     b   c    d   e   
+             -f
+  59   1      
+  60   1               i=x;                  
+  61   1               year=i&0x0f; 
+  62   1               byte(list[year]);
+  63   1               year=(i>>4)&0x0f;//秒
+  64   1               byte(list[year]);//
+  65   1              
+  66   1               i=(x>>8);                     
+  67   1               year=i&0x0f; 
+  68   1               byte(list[year]);//
+  69   1               year=(i>>4)&0x0f;//秒
+  70   1               byte(list[year]);   
+  71   1               RCK=1;                    
+  72   1               RCK=0;
+  73   1      
+  74   1      }
+  75          
+  76          
+  77          /*数码管显示结束*/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

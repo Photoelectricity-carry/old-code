@@ -1,0 +1,57 @@
+#column-content {
+	FLOAT: none; MARGIN-LEFT: 0px; HEIGHT: 1%
+}
+#column-content #content {
+	MARGIN-TOP: 3em; MARGIN-LEFT: 12.2em; HEIGHT: 1%
+}
+#column-one {
+	Z-INDEX: 4; LEFT: 0px; POSITION: absolute; TOP: 0px
+}
+#footer {
+	MARGIN-LEFT: 13.6em; BORDER-LEFT: #fabd23 1px solid
+}
+#p-cactions {
+	Z-INDEX: 3
+}
+#p-cactions LI {
+	FLOAT: left; PADDING-BOTTOM: 0px! important; PADDING-TOP: 0px; HEIGHT: 0.9em
+}
+#p-cactions LI A {
+	DISPLAY: block; PADDING-BOTTOM: 0.04em
+}
+#p-cactions LI.selected A {
+	PADDING-BOTTOM: 0.17em
+}
+#p-cactions LI A:hover {
+	PADDING-BOTTOM: 0.17em
+}
+#portal-personaltools {
+	PADDING-BOTTOM: 0.1em
+}
+#bodyContent A.external {
+	PADDING-RIGHT: 13px; BACKGROUND: url(external.png) no-repeat right center
+}
+#p-logo A {
+	CURSOR: pointer
+}
+#p-logo A:hover {
+	CURSOR: pointer
+}
+DIV.visualClear {
+	WIDTH: 100%; LINE-HEIGHT: 0
+}
+TEXTAREA {
+	OVERFLOW: auto; WIDTH: 96%
+}
+DIV.editsection {
+	POSITION: relative
+}
+#catlinks {
+	POSITION: relative
+}
+DIV.tright {
+	POSITION: relative
+}
+DIV.tleft {
+	POSITION: relative
+}

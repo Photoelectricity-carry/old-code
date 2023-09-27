@@ -1,0 +1,357 @@
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE ÑÕÉ____Ö
+OBJECT MODULE PLACED IN ÑÕÉ«Ï¸·Ö.OBJ
+COMPILER INVOKED BY: D:\Keilk\C51\BIN\C51.EXE ÑÕÉ«Ï¸·Ö.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg52.h>
+   2          unsigned  int  code jdm=(3*256),jdn=(3*256);
+   3          extern  unsigned int rgb[];
+   4          extern  float rx,gx,bx;
+   5          extern  unsigned int x,y,z;
+   6          display(unsigned int x);
+   7          fews(unsigned int ss)
+   8          {
+   9   1      static unsigned int wwwww;
+  10   1      if(wwwww<500)
+  11   1            display(ss);//((x>>8)|(ss|0x0100));
+  12   1      else if((wwwww<2000)&(wwwww>499))
+  13   1            display(ss);//((y>>8)|(ss|0x0200));
+  14   1      else if((wwwww<3000)&(wwwww>1999))
+  15   1            display(ss);//((z>>8)|(ss|0x0300)); 
+  16   1      else wwwww=0;
+  17   1      
+  18   1      wwwww++;
+  19   1      
+  20   1      }
+  21                                                              
+  22          zrgb(unsigned char we)//ºìÂÌÀ¶
+  23          {
+  24   1      fews(0x1000|we);    
+  25   1      }
+  26          
+  27          zrbg(unsigned char we)//ºìÀ¶ÂÌ
+  28          {
+  29   1      fews(0x2000|we);   
+  30   1      }
+  31          
+  32          zgrb(unsigned char we)//ÂÌºìÀ¶
+  33          {
+  34   1      fews(0x3000|we);
+  35   1      }
+  36          
+  37          zgbr(unsigned char we)//ÂÌÀ¶ºì
+  38          {
+  39   1      fews(0x4000|we);   
+  40   1      }
+  41          
+  42          zbrg(unsigned char we)//À¶ºìÂÌ
+  43          {
+  44   1      fews(0x5000|we);   
+  45   1      }
+  46          
+  47          zbgr(unsigned char we)//À¶ÂÌºì
+  48          {
+  49   1      fews(0x6000|we);   
+  50   1      }
+  51          rgb_rgb()//ºìÂÌÀ¶Æ½ºâ
+  52          {
+  53   1      fews(0x7000); 
+  54   1      }
+  55          
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 2   
+
+  56          rg_rgb(unsigned char we)//ºìÂÌÆ½ºâ
+  57          {
+  58   1       fews(0x8000|we);
+  59   1      
+  60   1      }
+  61          
+  62          rb_rgb(unsigned char we)//ºìÀ¶Æ½ºâ
+  63          {
+  64   1       fews(0x9000|we);
+  65   1      
+  66   1      }
+  67          
+  68          gb_rgb(unsigned char we)//ÂÌÀ¶Æ½ºâ
+  69          {
+  70   1       fews(0xa000|we);
+  71   1      
+  72   1      }
+  73          
+  74          
+  75          
+  76          unsigned char max(unsigned int x,unsigned int y,unsigned int z)//·ÖÀà
+  77          {
+  78   1       if((x-z)<jdm)//¾«¶È
+  79   1            return 'a';
+  80   1       else if((x-y)<jdm)
+  81   1             {          return 'b'; }
+  82   1       else if((y-z)<jdm)
+  83   1              {         return 'c'; }
+  84   1       else return 'n';
+  85   1      }
+  86          unsigned char may(unsigned int x,unsigned int y,unsigned int z)//²»Æ½ºâ
+  87          {
+  88   1       if((x-y)<jdn)
+  89   1             {
+  90   2                if((y-z)<jdn)
+  91   2                     return 'a';
+  92   2                else if((y-z)<(2*jdn))
+  93   2                     return 'b';
+  94   2                else if((y-z)<(3*jdn))
+  95   2                     return 'c';
+  96   2                else if((y-z)<(4*jdn)) 
+  97   2                     return 'd'; 
+  98   2                else if((y-z)<(5*jdn)) 
+  99   2                     return 'e';
+ 100   2                else if((y-z)<(6*jdn))
+ 101   2                     return 'f'; 
+ 102   2                else return 'g'; 
+ 103   2             }                    
+ 104   1       else if((x-y)<(2*jdn))
+ 105   1             {
+ 106   2               if((y-z)<jdn)
+ 107   2                     return 'h';
+ 108   2                else if((y-z)<(2*jdn))
+ 109   2                     return 'i';
+ 110   2                else if((y-z)<(3*jdn))
+ 111   2                     return 'j';
+ 112   2                else if((y-z)<(4*jdn)) 
+ 113   2                     return 'k'; 
+ 114   2                else if((y-z)<(5*jdn)) 
+ 115   2                     return 'l';
+ 116   2                else if((y-z)<(6*jdn))
+ 117   2                     return 'm'; 
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 3   
+
+ 118   2                else return 'n'; 
+ 119   2      
+ 120   2             }                  
+ 121   1       else if((x-y)<(3*jdn))
+ 122   1              {
+ 123   2                if((y-z)<jdn)
+ 124   2                     return 'o';
+ 125   2                else if((y-z)<(2*jdn))
+ 126   2                     return 'p';
+ 127   2                else if((y-z)<(3*jdn))
+ 128   2                     return 'q';
+ 129   2                else if((y-z)<(4*jdn)) 
+ 130   2                     return 'r'; 
+ 131   2                else if((y-z)<(5*jdn)) 
+ 132   2                     return 's';
+ 133   2                else if((y-z)<(6*jdn))
+ 134   2                     return 't'; 
+ 135   2                else return 'u'; 
+ 136   2      
+ 137   2             }
+ 138   1      else if((x-y)<(4*jdn))
+ 139   1              {
+ 140   2                if((y-z)<jdn)
+ 141   2                     return 'v';
+ 142   2                else if((y-z)<(2*jdn))
+ 143   2                     return 'w';
+ 144   2                else if((y-z)<(3*jdn))
+ 145   2                     return 'x';
+ 146   2                else if((y-z)<(4*jdn)) 
+ 147   2                     return 'y'; 
+ 148   2                else if((y-z)<(5*jdn)) 
+ 149   2                     return 'z';
+ 150   2                else if((y-z)<(6*jdn))
+ 151   2                     return 'A'; 
+ 152   2                else return 'B'; 
+ 153   2      
+ 154   2             }
+ 155   1      else if((x-y)<(5*jdn))
+ 156   1              {
+ 157   2                if((y-z)<jdn)
+ 158   2                     return 'C';
+ 159   2                else if((y-z)<(2*jdn))
+ 160   2                     return 'D';
+ 161   2                else if((y-z)<(3*jdn))
+ 162   2                     return 'E';
+ 163   2                else if((y-z)<(4*jdn)) 
+ 164   2                     return 'F'; 
+ 165   2                else if((y-z)<(5*jdn)) 
+ 166   2                     return 'G';
+ 167   2                else if((y-z)<(6*jdn))
+ 168   2                     return 'H'; 
+ 169   2                else return 'I'; 
+ 170   2      
+ 171   2             }
+ 172   1      
+ 173   1      
+ 174   1      else if((x-y)<(6*jdn))
+ 175   1              {
+ 176   2                if((y-z)<jdn)
+ 177   2                     return 'J';
+ 178   2                else if((y-z)<(2*jdn))
+ 179   2                     return 'K';
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 4   
+
+ 180   2                else if((y-z)<(3*jdn))
+ 181   2                     return 'L';
+ 182   2                else if((y-z)<(4*jdn)) 
+ 183   2                     return 'M'; 
+ 184   2                else if((y-z)<(5*jdn)) 
+ 185   2                     return 'N';
+ 186   2                else if((y-z)<(6*jdn))
+ 187   2                     return 'O'; 
+ 188   2                else return 'P'; 
+ 189   2      
+ 190   2             }
+ 191   1      
+ 192   1                        
+ 193   1             
+ 194   1       else  {
+ 195   2               if((y-z)<jdn)
+ 196   2                     return 'Q';
+ 197   2                else if((y-z)<(2*jdn))
+ 198   2                     return 'R';
+ 199   2                else if((y-z)<(3*jdn))
+ 200   2                     return 'S';
+ 201   2                else if((y-z)<(4*jdn)) 
+ 202   2                     return 'T'; 
+ 203   2                else if((y-z)<(5*jdn)) 
+ 204   2                     return 'U';
+ 205   2                else if((y-z)<(6*jdn))
+ 206   2                     return 'V'; 
+ 207   2                else return 'W'; 
+ 208   2      
+ 209   2             }                  
+ 210   1      
+ 211   1      
+ 212   1      
+ 213   1      
+ 214   1      
+ 215   1      }
+ 216          unsigned char maz(unsigned int x,unsigned int y)//°ëÆ½ºâ
+ 217          {
+ 218   1       if((x-y)<jdn)
+ 219   1          return 'a';
+ 220   1       else if((x-y)<(2*jdn))
+ 221   1           return 'b';
+ 222   1       else if((x-y)<(3*jdn))
+ 223   1           return 'c';
+ 224   1      else if((x-y)<(4*jdn))
+ 225   1           return 'd';
+ 226   1       else if((x-y)<(5*jdn))
+ 227   1           return 'e';
+ 228   1      else if((x-y)<(6*jdn))
+ 229   1           return 'f';
+ 230   1       else if((x-y)<(7*jdn))
+ 231   1           return 'g';
+ 232   1       else return 'h'; 
+ 233   1       
+ 234   1      }
+ 235          
+ 236          
+ 237          
+ 238          ysxf()//Õâ²¿·ÖÎªÑÕÉ«Ñ¡Ôñ
+ 239          {unsigned char saz; 
+ 240   1       unsigned int xrgb[3];
+ 241   1      
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 5   
+
+ 242   1         x=(rx*rgb[0]); 
+ 243   1         y=(rgb[1]);    
+ 244   1         z=(bx*rgb[2]);
+ 245   1          
+ 246   1              if((x>=y)&(y>=z))//ºìÂÌÀ¶
+ 247   1                {
+ 248   2                  if(max(x,y,z)=='a') rgb_rgb();//°×Æ½ºâ
+ 249   2                  else if(max(x,y,z)=='n'){zrgb(may(x,y,z));}//²»Æ½ºâ  
+ 250   2                  else if(max(x,y,z)=='b'){rg_rgb(maz(y,z));}//12Æ½ºâ
+ 251   2                  else if(max(x,y,z)=='c'){gb_rgb(maz(x,y));}//23Æ½ºâ 
+ 252   2               
+ 253   2      
+ 254   2                } 
+ 255   1              
+ 256   1         else if((x>=z)&(z>=y))//ºìÀ¶ÂÌ
+ 257   1                { 
+ 258   2                  if(max(x,z,y)=='a') rgb_rgb();//°×Æ½ºâ
+ 259   2                  else if(max(x,z,y)=='n'){zrbg(may(x,z,y));}//²»Æ½ºâ  
+ 260   2                  else if(max(x,z,y)=='b'){rb_rgb(maz(z,y));}//12Æ½ºâ
+ 261   2                  else if(max(x,z,y)=='c'){gb_rgb(maz(x,z));}//23Æ½ºâ 
+ 262   2                  
+ 263   2                 // if(max(x,z,y)==(saz='a')) rgb_rgb();//°×Æ½ºâ 
+ 264   2                 // else zrbg(saz); 
+ 265   2                }      
+ 266   1         
+ 267   1         else if((y>=x)&(x>=z))//ÂÌºìÀ¶
+ 268   1                  {
+ 269   2                    if(max(y,x,z)=='a') rgb_rgb();//°×Æ½ºâ
+ 270   2                    else if(max(y,x,z)=='n'){zgrb(may(y,x,z));}//²»Æ½ºâ  
+ 271   2                    else if(max(y,x,z)=='b'){rg_rgb(maz(x,z));}//12Æ½ºâ
+ 272   2                    else if(max(y,x,z)=='c'){rb_rgb(maz(y,x));}//23Æ½ºâ 
+ 273   2      
+ 274   2      
+ 275   2                   // if(max(y,x,z)==(saz='a')) rgb_rgb();//°×Æ½ºâ 
+ 276   2                   // else zgrb(saz); 
+ 277   2                  }      
+ 278   1      
+ 279   1         else if((y>=z)&(z>=x))//ÂÌÀ¶ºì
+ 280   1                  {
+ 281   2      
+ 282   2                    if(max(y,z,x)=='a') rgb_rgb();//°×Æ½ºâ
+ 283   2                    else if(max(y,z,x)=='n'){zgbr(may(y,z,x));}//²»Æ½ºâ  
+ 284   2                    else if(max(y,z,x)=='b'){rb_rgb(maz(z,x));}//12Æ½ºâ
+ 285   2                    else if(max(y,z,x)=='c'){gb_rgb(maz(y,z));}//23Æ½ºâ 
+ 286   2      
+ 287   2                   // if(max(y,z,x)==(saz='a')) rgb_rgb();//°×Æ½ºâ  
+ 288   2                   // else zgbr(saz); 
+ 289   2                   }      
+ 290   1      
+ 291   1         else if((z>=x)&(x>=y))//À¶ºìÂÌ
+ 292   1                  { 
+ 293   2                      if(max(z,x,y)=='a') rgb_rgb();//°×Æ½ºâ
+ 294   2                      else if(max(z,x,y)=='n'){zbrg(may(z,x,y));}//²»Æ½ºâ  
+ 295   2                      else if(max(z,x,y)=='b'){rg_rgb(maz(x,y));}//12Æ½ºâ
+ 296   2                      else if(max(z,x,y)=='c'){rb_rgb(maz(z,x));}//23Æ½ºâ 
+ 297   2      
+ 298   2      
+ 299   2                   // if(max(z,x,y)==(saz='a')) rgb_rgb();//°×Æ½ºâ 
+ 300   2                   // else zbrg(saz);
+ 301   2                  }       
+ 302   1      
+ 303   1         else if((z>=y)&(y>=x))//À¶ÂÌºì
+C51 COMPILER V7.06   ÑÕÉ____Ö                                                              06/22/2005 10:11:49 PAGE 6   
+
+ 304   1                  { 
+ 305   2                    if(max(x,y,z)=='a') rgb_rgb();//°×Æ½ºâ
+ 306   2                    else if(max(z,y,x)=='n'){zbgr(may(z,y,x));}//²»Æ½ºâ  
+ 307   2                    else if(max(z,y,x)=='b'){rg_rgb(maz(y,x));}//12Æ½ºâ
+ 308   2                    else if(max(z,y,x)=='c'){gb_rgb(maz(z,y));}//23Æ½ºâ 
+ 309   2      
+ 310   2      
+ 311   2      
+ 312   2                   //if(max(z,y,x)==(saz='a')) rgb_rgb(); //°×Æ½ºâ 
+ 313   2                   //else zbgr(saz);
+ 314   2                   }
+ 315   1      
+ 316   1             
+ 317   1         else  rgb_rgb();
+ 318   1      
+ 319   1      }
+*** WARNING C280 IN LINE 239 OF ÑÕÉ«Ï¸·Ö.C: 'saz': unreferenced local variable
+*** WARNING C280 IN LINE 240 OF ÑÕÉ«Ï¸·Ö.C: 'xrgb': unreferenced local variable
+ 320          
+ 321          
+ 322          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3024    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,16 @@
+..\obj\port.o: ..\HARDWARE\port.c
+..\obj\port.o: ..\HARDWARE\port.h
+..\obj\port.o: ..\SYSTEM\sys\sys.h
+..\obj\port.o: ..\USER\stm32f10x.h
+..\obj\port.o: ..\CORE\core_cm3.h
+..\obj\port.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\port.o: ..\USER\system_stm32f10x.h
+..\obj\port.o: ..\USER\stm32f10x_conf.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_dbgmcu.h
+..\obj\port.o: ..\USER\stm32f10x.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_exti.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\port.o: ..\STM32F10x_FWLib\inc\misc.h

@@ -1,0 +1,143 @@
+<script src="XmpIEStat.js" type="text/javascript"></script>
+<script language="JavaScript" >
+	var arrProtocol = ["http://", "https://", "ftp://", "ed2k://", "gvod://", "thunder://", "magnet:", "mms://", "rtsp://", "srtsp://", "rtmp://"];
+	var strSupportExt = ".3g2;.3gp;.3gp2;.3gpp;.aac;.ac3;.acc;.ass;.aiff;.amr;.amv;.ape;.asf;.avi;.au;.bik;.cda;.csf;.dts;.dat;.divx;.dvd;.evo;.flac;.flv;.f4v;.hlv;.idx;.m1a;.m2a;.m4a;.mka;.mod;.mp2;.mp3;.mpa;.mpc;.mid;.midi;.m1v;.m2p;.m2ts;.m2v;.m4b;.m4p;.m4v;.mkv;.mov;.mp4;.mpe;.mpeg;.mpeg1;.mpeg2;.mpeg4;.mpg;.mpv2;.mts;.mp2v;.ogg;.oga;.ogm;.ogv;.ogx;.pss;.pva;.pmp;.psb;.qt;.ra;.ram;.rm;.rmvb;.rp;.rpm;.rt;.scm;.smi;.smil;.srt;.ssa;.ssf;.sub;.swf;.tta;.tp;.tpr;.ts;.vob;.vp6;.wav;.wma;.wm;.wmp;.wmv;.wv;.usf;.xlmv;.xv;.xvx;.hflv;.f5v;.hmp4;.mp5;.hmkv;.mk5;";
+	function IsValidGVODUrl(url) {
+		var bSupportProtocol = false;
+		for (var i = 0; i < arrProtocol.length; i++) {
+			if (url.indexOf(arrProtocol[i]) == 0) {
+				bSupportProtocol = true;
+				break;
+			}
+		}
+		if (!bSupportProtocol) {
+			return false;
+		}
+		var strExt = url;
+		var indexAgr = strExt.indexOf("?");
+		if (indexAgr >= 0) {
+			strExt = strExt.substring(0, indexAgr);
+		} else {
+			indexAgr = strExt.indexOf("#");
+			if (indexAgr >= 0) {
+				strExt = strExt.substring(0, indexAgr);
+			}
+		}
+		indexAgr = strExt.lastIndexOf(".");
+		if (indexAgr >= 0) {
+			strExt = strExt.substring(indexAgr);
+		}
+		strExt = strExt.toLowerCase();
+		strExt += ";";
+		return strSupportExt.indexOf(strExt) >= 0;
+	}
+	function OnContextMenu() {
+		var strMore = " /sstartfrom iemenu /sopenfrom iemenu";
+		var strContent;
+		try {
+			strContent = external.menuArguments.document.selection.createRange().text;
+		} catch(e) {
+			//alert(e.message);
+		}
+		var strUrl = external.menuArguments.document.URL;
+		//alert("选中一段文本 接下来通过dapctrl拉起xmp播放 选中内容如下 :  " + strContent); 
+		//判断内容是否为可播链接 如果是就直接返回了. 
+		var ver = GetDapCtrl().GetThunderVer("KANKAN", "INSTALL");
+		var type = GetDapCtrl().Get("IXMPPACKAGETYPE");//是3081
+		if(ver >= 672 && type >= 2401)
+		{
+			
+		}
+		else
+		{
+			alert("没有安装迅雷看看播放器或安装的版本过低");
+			return;
+		}
+		
+		if(strContent)
+		{
+			SendConvStat("XMP-IEMenu", "content");
+			GetDapCtrl().Put("sxmp4arg", strContent + strMore+" /ieeventtype content" + " /srefpage \"" + strUrl + "\"");
+			return;
+		}
+
+		var srcEvent = external.menuArguments.event;
+		var EventElement;
+		if(typeof(srcEvent.clientX) == "undefined")
+		{
+			EventElement = external.menuArguments.document.elementFromPoint ( srcEvent.pointerX, srcEvent.pointerY );
+		}
+		else
+		{
+			EventElement = external.menuArguments.document.elementFromPoint ( srcEvent.clientX, srcEvent.clientY );
+		}
+		var srcAnchor;
+		//alert(srcEvent.type);
+		if (srcEvent.type == "MenuExtAnchor")
+		{
+			srcAnchor = EventElement;
+			do
+			{ 
+				srcAnchor=srcAnchor.parentElement;
+			}while(typeof(srcAnchor)=="HTMLAnchorElement");
+			SendConvStat("XMP-IEMenu", "MenuExtAnchor");
+			GetDapCtrl().Put("sxmp4arg", srcAnchor.href + strMore+" /ieeventtype MenuExtAnchor" + " /srefpage \"" + strUrl + "\"")
+			return;
+		}
+		else if (srcEvent.type == "MenuExtImage")
+		{
+			if (typeof(EventElement) == "HTMLAreaElement")
+			{
+				SendConvStat("XMP-IEMenu", "HTMLAreaElement");
+				GetDapCtrl().Put("sxmp4arg", EventElement.href+ strMore+" /ieeventtype HTMLAreaElement" + " /srefpage \"" + strUrl + "\"")
+				return;
+			}
+			else 
+			{
+				var srcImage = EventElement;
+				var srcAnchor = srcImage.parentElement;
+				do
+				{ 
+					srcAnchor=srcAnchor.parentElement;						
+				}while(typeof(srcAnchor) == "HTMLAnchorElement");
+				SendConvStat("XMP-IEMenu", "MenuExtImage");
+				GetDapCtrl().Put("sxmp4arg", srcAnchor.href+ strMore+" /ieeventtype MenuExtImage" + " /srefpage \"" + strUrl + "\"");
+				return;
+			}
+		}
+		else if (srcEvent.type == "MenuExtUnknown")
+		{
+			if (EventElement.href || EventElement.src) {
+				if (EventElement.href == "about:blank" || EventElement.src == "about:blank") {
+					EventElement = srcEvent.srcElement
+				}
+			} else {
+				EventElement = srcEvent.srcElement
+			}
+		}
+		
+		//选中的是 href 或 src 直接播放 	，当没有播放器时，嵌入一个url 有个x可以x掉
+		if(EventElement) {
+			if (EventElement.href && IsValidGVODUrl(EventElement.href)) {
+				SendConvStat("XMP-IEMenu", "href");
+				GetDapCtrl().Put("sxmp4arg", EventElement.href + strMore+" /ieeventtype href" + " /srefpage \"" + strUrl + "\"");
+				return;
+			} else if (EventElement.src && IsValidGVODUrl(EventElement.src)) {
+				SendConvStat("XMP-IEMenu", "src");
+				GetDapCtrl().Put("sxmp4arg", EventElement.src + strMore+" /ieeventtype src" + " /srefpage \"" + strUrl + "\"");
+				return;
+			} else if (EventElement.innerText && IsValidGVODUrl(EventElement.innerText)) {
+				SendConvStat("XMP-IEMenu", "innerText");
+				GetDapCtrl().Put("sxmp4arg", EventElement.innerText + strMore+" /ieeventtype innerText" + " /srefpage \"" + strUrl + "\"");
+				return;
+			} else if (EventElement.href) {
+				SendConvStat("XMP-IEMenu", "href");
+				GetDapCtrl().Put("sxmp4arg", EventElement.href + strMore+" /ieeventtype href" + " /srefpage \"" + strUrl + "\"");
+				return;
+			}
+		}
+		SendConvStat("XMP-IEMenu", "iemenu");
+		GetDapCtrl().Put("sxmp4arg", strMore);
+	}
+	OnContextMenu();
+</script>

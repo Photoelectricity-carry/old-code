@@ -1,0 +1,177 @@
+<globalremoteconfig>
+	<section id="360safeconfig">
+		<key id="360safeurl" type="string"><![CDATA[http://xlissue110.sandai.net/1366963978404.dat?fid=/8gOGGyQ48k9WPzkhmSYRvN0E+zlWA0BAAAAAC30ANNF0pFtHjLCoaP/PAzLHLu7&mid=666&threshold=150&tid=F284ED5E05A49220BA83A54190735CD7&srcid=0]]></key>
+		<key id="360safeopen" type="int">1</key>
+		<key id="maxlimitcount" type="int">1</key>
+		<key id="internaldays" type="int">15</key>
+		<key id="islimitcapacity" type="int">0</key>		
+		<key id="competionsoftware_num" type="int">0</key>
+		<key id="competionsoftware1_open" type="int">1</key>
+		<key id="competionsoftware1_have" type="int">0</key>
+		<key id="competionsoftware1_name" type="int">QQPCMgr</key>
+		<key id="competionsoftware1_key" type="string">HKEY_LOCAL_MACHINE</key>
+		<key id="competionsoftware1_path" type="string">SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\QQPCMgr</key>
+		<key id="competionsoftware1_value" type="string">UninstallString</key>
+		<key id="alluser" type="int">1</key>
+		<key id="filesuffixmarketwithoutcheck" type="string">.zip;.rar;.7z;</key>
+		<key id="ischeckservermarket" type="int">0</key>
+		<key id="isunsafelimitcapacity" type="int">0</key> 
+		<key id="maxunsafepromotionlimitcount" type="int">3</key>
+		<key id="unsafepromotioninternaldays" type="int">15</key>
+		<key id="taskcompletepromotion" type="int">1</key>
+
+	</section>
+	<section id="SpeedCheckTool">
+		<key id="CheckP2pExeNumber" type="int">10</key>
+		<key id="CheckP2pExe1" type="string">ppstream.exe</key>
+		<key id="CheckP2pName1" type="string">PPS网络电视</key>
+        <key id="CheckP2pExe2" type="string">ppskernel.exe</key>
+		<key id="CheckP2pName2" type="string">PPS加速程序</key>
+	    <key id="CheckP2pExe3" type="string">Qvodplayer.exe</key>
+		<key id="CheckP2pName3" type="string">快播</key>
+	    <key id="CheckP2pExe4" type="string">Qvodterminal.exe</key>
+		<key id="CheckP2pName4" type="string">快播加速程序</key>
+	    <key id="CheckP2pExe5" type="string">QQDownload.exe</key>
+		<key id="CheckP2pName5" type="string">QQ旋风</key>
+	    <key id="CheckP2pExe6" type="string">Funshion.exe</key>
+		<key id="CheckP2pName6" type="string">风行网络电视</key>
+	    <key id="CheckP2pExe7" type="string">Flashget.exe</key>
+		<key id="CheckP2pName7" type="string">网际快车</key>
+		<key id="CheckP2pExe8" type="string">Emule.exe</key>
+		<key id="CheckP2pName8" type="string">电驴</key>
+		<key id="CheckP2pExe9" type="string">Vagaa.exe</key>
+		<key id="CheckP2pName9" type="string">哇嘎</key>
+		<key id="CheckP2pExe10" type="string">Baiduyun.exe</key>
+		<key id="CheckP2pName10" type="string">百度云加速程序</key>
+    </section>
+
+	<section id="XMPtext">
+		<key id="rmvb" type="string">流畅播放，画质鲜明，智能匹配字幕</key>
+		<key id="mpeg" type="string">流畅播放，画质鲜明，智能匹配字幕</key>
+		<key id="mp4" type="string">流畅播放，画质鲜明，智能匹配字幕</key>
+		<key id="avi" type="string">字幕智能在线匹配，省时省事</key>
+		<key id="flv" type="string">字幕智能在线匹配，省时省事</key>
+		<key id="m2ts" type="string">M2TS高清视频播放无压力，在线匹配字幕</key>
+		<key id="ts" type="string">TS高清视频播放无压力，在线匹配字幕</key>
+		<key id="mts" type="string">MTS高清视频播放无压力，在线匹配字幕</key>
+		<key id="mkv" type="string">MKV高清视频播放无压力，在线匹配字幕</key>
+		<key id="other" type="string">完美兼容迅雷7，占用资源小</key>
+		<key id="filesize" type="int">2147483648</key>
+		<key id="fileTips" type="string">高清视频播放无压力，在线匹配字幕</key>
+    </section>
+	<section id="SlowSpeed">
+		<key id="speed" type="int">20480</key>
+		<key id="eqSpeed" type="int">51200</key>
+		<key id="circle" type="int">120</key>
+		<key id="multiple" type="int">2</key>
+	</section>
+	<section id="sofeng">
+		<key id="cpuoccupancy" type="int">10</key>
+		<key id="memoryoccupancy" type="int">150</key>
+		<key id="cpuDurationTime" type="int">100</key>
+		<key id="memoryDurationTime" type="int">100</key>
+		<key id="stuck" type="int">5000</key>
+		<key id="maxstarttime" type="int">2000</key>
+		<key id="singlenewtaskspeed" type="int">1000</key>
+		<key id="WorkUpMode" type="int">1</key>
+	</section>
+	<section id="AppMonitor">
+		<key id="CpuEnable" type="int">1</key><!-- 1开启CPU监控 0关闭CPU监控-->
+		<key id="CpuUsage" type="int">0</key><!-- CPU平均值高于该阀值上报 单位：% -->
+		<key id="CpuCheckTime" type="int">5</key><!-- 多久检测一次CPU占用 单位：秒 -->
+		<key id="CpuReportTime" type="int">5</key><!-- 多久取一次CPU平均值上报 单位：分钟 -->
+		<key id="MemoryEnable" type="int">1</key><!-- 1开启内存监控 0关闭内存监控-->
+		<key id="MemoryUsage" type="int">0</key><!-- 内存平均值高于该阀值上报 单位：MB -->
+		<key id="MemoryCheckTime" type="int">5</key><!-- 多久检测一次内存占用 单位：秒 -->
+		<key id="MemoryReportTime" type="int">5</key><!-- 多久取一次内存平均值上报 单位：分钟 -->
+		<key id="HungEnable" type="int">1</key><!-- 1开启卡死监控 0关闭卡死监控-->
+		<key id="HungCheckTime" type="int">5</key><!-- 多久检测一次卡死 单位：秒 -->
+		<key id="HungReportTimes" type="int">1</key><!-- 卡死上报次数 ，0表示一直上报 单位：次数 -->
+	</section>
+	<section id="SmartDown">
+		<key id="Signature" type="string">20130911</key>
+		<key id="Times" type="int">3</key>
+		<key id="Interval" type="int">10</key>
+		<key id="VersionCount" type="int">9</key>
+		<key id="Version1" type="string">7.9.10.4602</key>
+		<key id="Version2" type="string">7.9.10.4604</key>
+		<key id="Version3" type="string">7.9.10.4608</key>
+		<key id="Version4" type="string">7.9.10.4610</key>
+		<key id="Version5" type="string">7.9.11.4620</key>
+		<key id="Version6" type="string">7.9.11.4624</key>
+		<key id="Version7" type="string">7.9.11.4626</key>
+		<key id="Version8" type="string">7.9.12.4640</key>
+		<key id="Version9" type="string">7.9.12.4646</key>
+	</section>
+	<section id="EmptyWS" >	
+		<key id='isEmpty' type='int'>1</key>
+		<key id="time" type="int">1800000</key>		
+	</section>
+	<section id="TaskConfig" >	
+		<key id='Accelerate' type='int'>0</key>		
+	</section>
+	<section id='liveupdateConfig'>
+		<key id='timeElapse' type='int'>600</key>
+		<key id='showCount' type='int'>5</key>
+		<key id='showInterval' type='int'>1000</key>
+	</section>
+	<section id="EjectFilter">  
+		<key id='IsProtect' type='int'>1</key>
+        <key id='FullName1' type='string'>ast.dll</key>
+		<key id='FullName2' type='string'>scap.dll</key>
+		<key id='FullName3' type='string'>lanhookex.dll</key>
+		<key id='FullName4' type='string'>grooveutil.dll</key>
+		<key id='FullName5' type='string'>groovenew.dll</key>
+		<key id='FullName6' type='string'>grooveshellextensions.dll</key>
+		<key id='FullName7' type='string'>gra8e1~1.dll</key>
+		<key id='FullName8' type='string'>hgcounter.dll</key>
+		<key id='Postfix1' type='string'>.tmp</key>
+		<key id='Postfix2' type='string'>.so</key>
+    </section>
+	<section id="LuaInfoConfig">
+		<key id="switch" type="string">on</key>
+	</section>
+	<section id="RemoteDownloadConfig">
+		<key id="Enable" type="int">1</key>
+		<key id="EnableTaskList" type="int">1</key>
+		<key id="IntervalNormal" type="int">60</key>
+		<key id="IntervalOfOnePcPeer" type="int">300</key>
+		<key id="IntervalOfNoPeer" type="int">600</key>
+	</section>
+	<!-- 免费DCDN信息参数 -->
+	<section id="dcdnconfig">
+		<!-- 持续时间 -->
+		<key id="durationTime" type="int">60</key>
+		<!-- 单个下载时间（秒） -->
+		<key id="singleTaskDownTime" type="int">36000</key>
+		<!-- 所有下载时间（秒） -->
+		<key id="allTasksDownTime" type="int">36000</key>
+		<!-- 单个下载字节数 -->
+		<key id="singleTaskDownSize" type="int">314572800</key>
+		<!-- 所有下载字节数 -->
+		<key id="allTasksDownSize" type="int">314572800</key>
+		<!-- 开启免费DCDN的一个速度值(单位：bit) -->
+		<key id="useFreeDcdnDownSpeedOne" type="int">30720</key>
+		<!-- 开启免费DCDN的一个速度值(单位：bit/s) -->
+		<key id="useFreeDcdnDownSpeedTwo" type="int">51200</key>
+		<!-- 开启免费DCDN的一个可以存在的偏差值(单位：bit/s) -->
+		<key id="useFreeDcdnOffsetSpeed" type="int">10240</key>
+		<!-- 剩余需要下载的文件的大小(单位：bit) -->
+		<key id="useFreeDcdnRemainSize" type="int">104857600</key>
+		<!-- 剩余需要下载的文件的大小占总文件的百分比(单位：%) -->
+		<key id="remainSizePercentage" type="int">5</key>
+	</section>
+	
+	<section id="ThunderSoftInfo">
+		<key id='Switch' type='string'>on</key>
+	</section>
+	<section id="zlib">
+		<key id='timeElapse' type='int'>15</key>
+	</section>
+	
+	<!-- 地址栏搜索引擎配置。因为获取配置时有&得到为空，所以配置中连接参数的&符号都用###号代替 -->
+	<section id="SearchEngineConfig">
+		<key id='SearchEngine' type='string'>https://www.baidu.com/s?word=%key%###tn=49029047_dg</key>
+	</section>
+	
+</globalremoteconfig>

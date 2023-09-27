@@ -1,0 +1,16 @@
+.\objects\ahrs_middleware_1.o: ..\user\AHRS\AHRS_middleware.c
+.\objects\ahrs_middleware_1.o: ..\user\AHRS\AHRS_MiddleWare.h
+.\objects\ahrs_middleware_1.o: ..\user\AHRS\AHRS.h
+.\objects\ahrs_middleware_1.o: ..\User\DSP\Include\arm_math.h
+.\objects\ahrs_middleware_1.o: ..\CMSIS\core_cm4.h
+.\objects\ahrs_middleware_1.o: D:\K5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ahrs_middleware_1.o: ..\CMSIS\core_cmInstr.h
+.\objects\ahrs_middleware_1.o: ..\CMSIS\core_cmFunc.h
+.\objects\ahrs_middleware_1.o: ..\CMSIS\core_cmSimd.h
+.\objects\ahrs_middleware_1.o: D:\K5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\ahrs_middleware_1.o: D:\K5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\ahrs_middleware_1.o: ..\User\main.h
+.\objects\ahrs_middleware_1.o: ..\User\APP\CAN_Receive\CAN_Receive.h
+.\objects\ahrs_middleware_1.o: ..\User\APP\pid\pid.h
+.\objects\ahrs_middleware_1.o: ..\user\user_lib\user_lib.h
+.\objects\ahrs_middleware_1.o: ..\User\main.h

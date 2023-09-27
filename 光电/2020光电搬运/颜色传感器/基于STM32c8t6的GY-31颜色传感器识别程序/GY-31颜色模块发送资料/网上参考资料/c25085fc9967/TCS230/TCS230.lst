@@ -1,0 +1,277 @@
+   1               		.file	"TCS230.c"
+   2               		.arch atmega8
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               	.global	Time_1sFlag
+  19               	.global	Time_1sFlag
+  20               		.section .bss
+  23               	Time_1sFlag:
+  24 0000 00        		.skip 1,0
+  25               	.global	TCSPlus_1s
+  26               	.global	TCSPlus_1s
+  29               	TCSPlus_1s:
+  30 0001 0000      		.skip 2,0
+  31               	.global	Time1sCount
+  32               	.global	Time1sCount
+  35               	Time1sCount:
+  36 0003 00        		.skip 1,0
+  37               	.global	PhotoDiodeMode
+  38               		.data
+  41               	PhotoDiodeMode:
+  42 0000 02        		.byte	2
+  43               	.global	FrequencyMode
+  46               	FrequencyMode:
+  47 0001 03        		.byte	3
+  48               		.text
+  49               	.global	TCS230Mode
+  51               	TCS230Mode:
+  52               	.LFB9:
+  53               	.LM1:
+  54               	/* prologue: frame size=0 */
+  55               	/* prologue end (size=0) */
+  56 0000 982F      		mov r25,r24
+  57               	.LM2:
+  58 0002 8823      		tst r24
+  59 0004 21F4      		brne .L2
+  60               	.LM3:
+  61 0006 85B3      		in r24,53-0x20
+  62 0008 8C7F      		andi r24,lo8(-4)
+  63 000a 85BB      		out 53-0x20,r24
+  64 000c 13C0      		rjmp .L3
+  65               	.L2:
+  66               	.LM4:
+  67 000e 8130      		cpi r24,lo8(1)
+  68 0010 19F4      		brne .L4
+  69               	.LM5:
+  70 0012 9098      		cbi 50-0x20,0
+  71               	.LM6:
+  72 0014 919A      		sbi 50-0x20,1
+  73 0016 0EC0      		rjmp .L3
+  74               	.L4:
+  75               	.LM7:
+  76 0018 8230      		cpi r24,lo8(2)
+  77 001a 19F4      		brne .L6
+  78               	.LM8:
+  79 001c 9198      		cbi 50-0x20,1
+  80               	.LM9:
+  81 001e 909A      		sbi 50-0x20,0
+  82 0020 09C0      		rjmp .L3
+  83               	.L6:
+  84               	.LM10:
+  85 0022 8330      		cpi r24,lo8(3)
+  86 0024 21F4      		brne .L8
+  87               	.LM11:
+  88 0026 82B3      		in r24,50-0x20
+  89 0028 8360      		ori r24,lo8(3)
+  90 002a 82BB      		out 50-0x20,r24
+  91 002c 03C0      		rjmp .L3
+  92               	.L8:
+  93               	.LM12:
+  94 002e 81E0      		ldi r24,lo8(1)
+  95 0030 90E0      		ldi r25,hi8(1)
+  96 0032 0895      		ret
+  97               	.L3:
+  98               	.LM13:
+  99 0034 9093 0000 		sts FrequencyMode,r25
+ 100               	.LM14:
+ 101 0038 6623      		tst r22
+ 102 003a 21F4      		brne .L10
+ 103               	.LM15:
+ 104 003c 82B3      		in r24,50-0x20
+ 105 003e 837F      		andi r24,lo8(-13)
+ 106 0040 82BB      		out 50-0x20,r24
+ 107 0042 13C0      		rjmp .L11
+ 108               	.L10:
+ 109               	.LM16:
+ 110 0044 6230      		cpi r22,lo8(2)
+ 111 0046 19F4      		brne .L12
+ 112               	.LM17:
+ 113 0048 AB98      		cbi 53-0x20,3
+ 114               	.LM18:
+ 115 004a AA9A      		sbi 53-0x20,2
+ 116 004c 0EC0      		rjmp .L11
+ 117               	.L12:
+ 118               	.LM19:
+ 119 004e 6130      		cpi r22,lo8(1)
+ 120 0050 19F4      		brne .L14
+ 121               	.LM20:
+ 122 0052 AA98      		cbi 53-0x20,2
+ 123               	.LM21:
+ 124 0054 AB9A      		sbi 53-0x20,3
+ 125 0056 09C0      		rjmp .L11
+ 126               	.L14:
+ 127               	.LM22:
+ 128 0058 6330      		cpi r22,lo8(3)
+ 129 005a 21F4      		brne .L16
+ 130               	.LM23:
+ 131 005c 85B3      		in r24,53-0x20
+ 132 005e 8C60      		ori r24,lo8(12)
+ 133 0060 85BB      		out 53-0x20,r24
+ 134 0062 03C0      		rjmp .L11
+ 135               	.L16:
+ 136               	.LM24:
+ 137 0064 82E0      		ldi r24,lo8(2)
+ 138 0066 90E0      		ldi r25,hi8(2)
+ 139 0068 0895      		ret
+ 140               	.L11:
+ 141               	.LM25:
+ 142 006a 6093 0000 		sts PhotoDiodeMode,r22
+ 143               	.LM26:
+ 144 006e 80E0      		ldi r24,lo8(0)
+ 145 0070 90E0      		ldi r25,hi8(0)
+ 146               	.LM27:
+ 147 0072 0895      		ret
+ 148               	/* epilogue: frame size=0 */
+ 149 0074 0895      		ret
+ 150               	/* epilogue end (size=1) */
+ 151               	/* function TCS230Mode size 59 (58) */
+ 152               	.LFE9:
+ 154               	.global	TCS230Inital
+ 156               	TCS230Inital:
+ 157               	.LFB7:
+ 158               	.LM28:
+ 159               	/* prologue: frame size=0 */
+ 160               	/* prologue end (size=0) */
+ 161               	.LM29:
+ 162 0076 84B3      		in r24,52-0x20
+ 163 0078 8F60      		ori r24,lo8(15)
+ 164 007a 84BB      		out 52-0x20,r24
+ 165               	.LM30:
+ 166 007c 85B3      		in r24,53-0x20
+ 167 007e 8F60      		ori r24,lo8(15)
+ 168 0080 85BB      		out 53-0x20,r24
+ 169               	.LM31:
+ 170 0082 AD9A      		sbi 53-0x20,5
+ 171               	.LM32:
+ 172 0084 A59A      		sbi 52-0x20,5
+ 173               	.LM33:
+ 174 0086 AD98      		cbi 53-0x20,5
+ 175               	.LM34:
+ 176 0088 6091 0000 		lds r22,PhotoDiodeMode
+ 177 008c 8091 0000 		lds r24,FrequencyMode
+ 178 0090 B7DF      		rcall TCS230Mode
+ 179               	/* epilogue: frame size=0 */
+ 180 0092 0895      		ret
+ 181               	/* epilogue end (size=1) */
+ 182               	/* function TCS230Inital size 15 (14) */
+ 183               	.LFE7:
+ 185               	.global	TimerInital
+ 187               	TimerInital:
+ 188               	.LFB8:
+ 189               	.LM35:
+ 190               	/* prologue: frame size=0 */
+ 191               	/* prologue end (size=0) */
+ 192               	.LM36:
+ 193 0094 1FBC      		out 79-0x20,__zero_reg__
+ 194               	.LM37:
+ 195 0096 86E0      		ldi r24,lo8(6)
+ 196 0098 8EBD      		out 78-0x20,r24
+ 197               	.LM38:
+ 198 009a 1DBC      		out 77-0x20,__zero_reg__
+ 199               	.LM39:
+ 200 009c 1CBC      		out 76-0x20,__zero_reg__
+ 201               	.LM40:
+ 202 009e 17BC      		out 71-0x20,__zero_reg__
+ 203               	.LM41:
+ 204 00a0 16BC      		out 70-0x20,__zero_reg__
+ 205               	.LM42:
+ 206 00a2 1BBC      		out 75-0x20,__zero_reg__
+ 207               	.LM43:
+ 208 00a4 1ABC      		out 74-0x20,__zero_reg__
+ 209               	.LM44:
+ 210 00a6 19BC      		out 73-0x20,__zero_reg__
+ 211               	.LM45:
+ 212 00a8 18BC      		out 72-0x20,__zero_reg__
+ 213               	.LM46:
+ 214 00aa 12BC      		out 66-0x20,__zero_reg__
+ 215               	.LM47:
+ 216 00ac 87E0      		ldi r24,lo8(7)
+ 217 00ae 85BD      		out 69-0x20,r24
+ 218               	.LM48:
+ 219 00b0 87EB      		ldi r24,lo8(-73)
+ 220 00b2 84BD      		out 68-0x20,r24
+ 221               	.LM49:
+ 222 00b4 13BC      		out 67-0x20,__zero_reg__
+ 223               	.LM50:
+ 224 00b6 80E4      		ldi r24,lo8(64)
+ 225 00b8 89BF      		out 89-0x20,r24
+ 226               	/* epilogue: frame size=0 */
+ 227 00ba 0895      		ret
+ 228               	/* epilogue end (size=1) */
+ 229               	/* function TimerInital size 20 (19) */
+ 230               	.LFE8:
+ 232               	.global	__vector_4
+ 234               	__vector_4:
+ 235               	.LFB10:
+ 236               	.LM51:
+ 237               	/* prologue: frame size=0 */
+ 238 00bc 1F92      		push __zero_reg__
+ 239 00be 0F92      		push __tmp_reg__
+ 240 00c0 0FB6      		in __tmp_reg__,__SREG__
+ 241 00c2 0F92      		push __tmp_reg__
+ 242 00c4 1124      		clr __zero_reg__
+ 243 00c6 8F93      		push r24
+ 244 00c8 9F93      		push r25
+ 245               	/* prologue end (size=7) */
+ 246               	.LM52:
+ 247 00ca 87EB      		ldi r24,lo8(-73)
+ 248 00cc 84BD      		out 68-0x20,r24
+ 249               	.LM53:
+ 250 00ce 8091 0000 		lds r24,Time1sCount
+ 251 00d2 8F5F      		subi r24,lo8(-(1))
+ 252 00d4 8093 0000 		sts Time1sCount,r24
+ 253               	.LM54:
+ 254 00d8 8530      		cpi r24,lo8(5)
+ 255 00da 68F0      		brlo .L20
+ 256               	.LM55:
+ 257 00dc 8CB5      		in r24,76-0x20
+ 258 00de 9DB5      		in r25,(76)+1-0x20
+ 259 00e0 9093 0000 		sts (TCSPlus_1s)+1,r25
+ 260 00e4 8093 0000 		sts TCSPlus_1s,r24
+ 261               	.LM56:
+ 262 00e8 1DBC      		out (76)+1-0x20,__zero_reg__
+ 263 00ea 1CBC      		out 76-0x20,__zero_reg__
+ 264               	.LM57:
+ 265 00ec 1092 0000 		sts Time1sCount,__zero_reg__
+ 266               	.LM58:
+ 267 00f0 81E0      		ldi r24,lo8(1)
+ 268 00f2 8093 0000 		sts Time_1sFlag,r24
+ 269               	.L20:
+ 270               	/* epilogue: frame size=0 */
+ 271 00f6 9F91      		pop r25
+ 272 00f8 8F91      		pop r24
+ 273 00fa 0F90      		pop __tmp_reg__
+ 274 00fc 0FBE      		out __SREG__,__tmp_reg__
+ 275 00fe 0F90      		pop __tmp_reg__
+ 276 0100 1F90      		pop __zero_reg__
+ 277 0102 1895      		reti
+ 278               	/* epilogue end (size=7) */
+ 279               	/* function __vector_4 size 36 (22) */
+ 280               	.LFE10:
+ 282               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 TCS230.c
+                            *ABS*:0000003f __SREG__
+                            *ABS*:0000003e __SP_H__
+                            *ABS*:0000003d __SP_L__
+                            *ABS*:00000000 __tmp_reg__
+                            *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:23     .bss:00000000 Time_1sFlag
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:29     .bss:00000001 TCSPlus_1s
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:35     .bss:00000003 Time1sCount
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:41     .data:00000000 PhotoDiodeMode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:46     .data:00000001 FrequencyMode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:51     .text:00000000 TCS230Mode
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:156    .text:00000076 TCS230Inital
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:187    .text:00000094 TimerInital
+C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp/ccuoaaaa.s:234    .text:000000bc __vector_4
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

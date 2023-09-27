@@ -1,0 +1,1720 @@
+                        .module colour_identify.c
+                        .area data(ram, con, rel)
+ 0000           _AC_TABLE::
+ 0000                   .blkb 2
+                        .area idata
+ 0000 8081              .byte 128,129
+                        .area data(ram, con, rel)
+ 0002                   .blkb 2
+                        .area idata
+ 0002 8283              .byte 130,131
+                        .area data(ram, con, rel)
+ 0004                   .blkb 2
+                        .area idata
+ 0004 8485              .byte 132,133
+                        .area data(ram, con, rel)
+ 0006                   .blkb 2
+                        .area idata
+ 0006 8687              .byte 134,135
+                        .area data(ram, con, rel)
+ 0008                   .blkb 2
+                        .area idata
+ 0008 9091              .byte 144,145
+                        .area data(ram, con, rel)
+ 000A                   .blkb 2
+                        .area idata
+ 000A 9293              .byte 146,147
+                        .area data(ram, con, rel)
+ 000C                   .blkb 2
+                        .area idata
+ 000C 9495              .byte 148,149
+                        .area data(ram, con, rel)
+ 000E                   .blkb 2
+                        .area idata
+ 000E 9697              .byte 150,151
+                        .area data(ram, con, rel)
+ 0010                   .blkb 2
+                        .area idata
+ 0010 8889              .byte 136,137
+                        .area data(ram, con, rel)
+ 0012                   .blkb 2
+                        .area idata
+ 0012 8A8B              .byte 138,139
+                        .area data(ram, con, rel)
+ 0014                   .blkb 2
+                        .area idata
+ 0014 8C8D              .byte 140,141
+                        .area data(ram, con, rel)
+ 0016                   .blkb 2
+                        .area idata
+ 0016 8E8F              .byte 142,143
+                        .area data(ram, con, rel)
+ 0018                   .blkb 2
+                        .area idata
+ 0018 9899              .byte 152,153
+                        .area data(ram, con, rel)
+ 001A                   .blkb 2
+                        .area idata
+ 001A 9A9B              .byte 154,155
+                        .area data(ram, con, rel)
+ 001C                   .blkb 2
+                        .area idata
+ 001C 9C9D              .byte 156,157
+                        .area data(ram, con, rel)
+ 001E                   .blkb 2
+                        .area idata
+ 001E 9E9F              .byte 158,159
+                        .area data(ram, con, rel)
+ 0020                   .dbfile C:\DOCUME~1\Administrator\桌面\程序/12864.h
+ 0020                   .dbsym e AC_TABLE _AC_TABLE A[32:32]c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile C:\DOCUME~1\Administrator\桌面\程序/12864.h
+ 0000                   .dbfunc e delay_us _delay_us fV
+ 0000           ;              i -> R20,R21
+ 0000           ;              j -> R22,R23
+ 0000           ;              t -> R16,R17
+                        .even
+ 0000           _delay_us::
+ 0000 0E940000          xcall push_gset2
+ 0004                   .dbline -1
+ 0004                   .dbline 59
+ 0004           ; /*******************************************
+ 0004           ; * 文件名： 
+ 0004           ; * 功能： 
+ 0004           ; * 说明： 
+ 0004           ; /********************************************/
+ 0004           ; #include <iom128v.h>
+ 0004           ; #include <macros.h>
+ 0004           ; #include "12864.h"
+ 0004           ; 
+ 0004           ; //颜色识别器色光滤波器选择：红色(S2,S3=0,0)，蓝色(S2,S3=0,1)，绿色(S2,S3=1,1)
+ 0004           ; #define S2 _PC7
+ 0004           ; #define S3 _PC6
+ 0004           ; 
+ 0004           ; //变量、常量定义
+ 0004           ; volatile uchar red=0,blue=0,green=0,flag=0,i=0,j=0,data[5]={0};
+ 0004           ; volatile uint counter=0;
+ 0004           ; 
+ 0004           ; //中断定义
+ 0004           ; #pragma interrupt_handler interrupt_int2:4 
+ 0004           ; #pragma interrupt_handler interrupt_timer1:15
+ 0004           ; 
+ 0004           ; /*******************************************
+ 0004           ; * 函数名称: int2_init()
+ 0004           ; * 函数功能: 外部中断2初始化
+ 0004           ; * 入口参数: 无
+ 0004           ; * 出口参数: 无
+ 0004           ; /********************************************/
+ 0004           ; void int2_init() 
+ 0004           ; {
+ 0004           ;    DDRD &= ~BIT(2);//中断引脚设置为输入
+ 0004           ;    PORTD |= BIT(2); //设置输出口上拉
+ 0004           ;    EICRA = 0X20; //下降沿触发
+ 0004           ; }
+ 0004           ; 
+ 0004           ; /*******************************************
+ 0004           ; * 函数名称: timer1_init()
+ 0004           ; * 函数功能: 定时器1初始化
+ 0004           ; * 入口参数: 无
+ 0004           ; * 出口参数: 无
+ 0004           ; /********************************************/
+ 0004           ; void timer1_init()
+ 0004           ; {
+ 0004           ;     TCCR1B = 0X02;// 设置分频数为8
+ 0004           ;       TCNT1H = 0x63;// 设置计数初值, 定时20ms
+ 0004           ;     TCNT1L = 0xC0;
+ 0004           ; }
+ 0004           ; /*******************************************
+ 0004           ; * 函数名称: port_init()
+ 0004           ; * 函数功能: 端口初始化
+ 0004           ; * 入口参数: 无
+ 0004           ; * 出口参数: 无
+ 0004           ; /********************************************/
+ 0004           ; void port_init()
+ 0004           ; {
+ 0004           ;    DDRA = 0XFF;//PORTA3~0为液晶数据线
+ 0004           ;    DDRC = 0XFF;//控制S2与S3  
+ 0004           ; }
+ 0004           ; 
+ 0004           ; /*******************************************
+ 0004                   .dbline 61
+ 0004           ; * 函数名称:  main()
+ 0004           ; /********************************************/
+ 0004 A801              movw R20,R16
+ 0006 0AC0              xjmp L5
+ 0008           L2:
+ 0008                   .dbline 62
+ 0008 62E0              ldi R22,2
+ 000A 70E0              ldi R23,0
+ 000C 02C0              xjmp L9
+ 000E           L6:
+ 000E                   .dbline 62
+ 000E           L7:
+ 000E                   .dbline 62
+ 000E 6150              subi R22,1
+ 0010 7040              sbci R23,0
+ 0012           L9:
+ 0012                   .dbline 62
+ 0012 6030              cpi R22,0
+ 0014 6707              cpc R22,R23
+ 0016 D9F7              brne L6
+ 0018           X0:
+ 0018           L3:
+ 0018                   .dbline 61
+ 0018 4150              subi R20,1
+ 001A 5040              sbci R21,0
+ 001C           L5:
+ 001C                   .dbline 61
+ 001C 4030              cpi R20,0
+ 001E 4507              cpc R20,R21
+ 0020 99F7              brne L2
+ 0022           X1:
+ 0022                   .dbline -2
+ 0022           L1:
+ 0022 0E940000          xcall pop_gset2
+ 0026                   .dbline 0 ; func end
+ 0026 0895              ret
+ 0028                   .dbsym r i 20 i
+ 0028                   .dbsym r j 22 i
+ 0028                   .dbsym r t 16 i
+ 0028                   .dbend
+ 0028                   .dbfunc e delay_ms _delay_ms fV
+ 0028           ;              i -> R20,R21
+ 0028           ;              j -> R22,R23
+ 0028           ;              t -> R16,R17
+                        .even
+ 0028           _delay_ms::
+ 0028 0E940000          xcall push_gset2
+ 002C                   .dbline -1
+ 002C                   .dbline 73
+ 002C           ; void main(void)
+ 002C           ; {   
+ 002C           ;    port_init();
+ 002C           ;    int2_init();
+ 002C           ;    timer1_init();
+ 002C           ;    Init_12864();  
+ 002C           ;    LcmClearTXT(); //文本区清RAM函数
+ 002C           ;    Display_x_y_data(0,0,"颜色识别：");
+ 002C           ;    Display_x_y_data(1,0,"红色成分：");
+ 002C           ;    Display_x_y_data(2,0,"蓝色成分：");
+ 002C           ;    Display_x_y_data(3,0,"绿色成分：");
+ 002C           ;    S2=0;//先检测红色(S2,S3=0,0)
+ 002C                   .dbline 75
+ 002C           ;    S3=0;
+ 002C           ;    SEI();
+ 002C A801              movw R20,R16
+ 002E 0AC0              xjmp L14
+ 0030           L11:
+ 0030                   .dbline 76
+ 0030 60EF              ldi R22,2800
+ 0032 7AE0              ldi R23,10
+ 0034 02C0              xjmp L18
+ 0036           L15:
+ 0036                   .dbline 76
+ 0036           L16:
+ 0036                   .dbline 76
+ 0036 6150              subi R22,1
+ 0038 7040              sbci R23,0
+ 003A           L18:
+ 003A                   .dbline 76
+ 003A 6030              cpi R22,0
+ 003C 6707              cpc R22,R23
+ 003E D9F7              brne L15
+ 0040           X2:
+ 0040           L12:
+ 0040                   .dbline 75
+ 0040 4150              subi R20,1
+ 0042 5040              sbci R21,0
+ 0044           L14:
+ 0044                   .dbline 75
+ 0044 4030              cpi R20,0
+ 0046 4507              cpc R20,R21
+ 0048 99F7              brne L11
+ 004A           X3:
+ 004A                   .dbline -2
+ 004A           L10:
+ 004A 0E940000          xcall pop_gset2
+ 004E                   .dbline 0 ; func end
+ 004E 0895              ret
+ 0050                   .dbsym r i 20 i
+ 0050                   .dbsym r j 22 i
+ 0050                   .dbsym r t 16 i
+ 0050                   .dbend
+ 0050                   .dbfunc e Sendbyte _Sendbyte fV
+ 0050           ;              i -> R20
+ 0050           ;           data -> R22
+                        .even
+ 0050           _Sendbyte::
+ 0050 0E940000          xcall push_gset2
+ 0054 602F              mov R22,R16
+ 0056                   .dbline -1
+ 0056                   .dbline 87
+ 0056           ;    EIMSK |= BIT(2); //打开外部中断
+ 0056           ;    TIMSK |=  BIT(2);//打开溢出中断
+ 0056           ;    while(1);  
+ 0056           ; }
+ 0056           ; 
+ 0056           ;  /*******************************************
+ 0056           ; * 函数名称:  interrupt_int2()  
+ 0056           ; * 函数功能: 
+ 0056           ; * 入口参数: 无
+ 0056           ; * 出口参数: 无
+ 0056           ; /********************************************/
+ 0056           ; void interrupt_int2()  
+ 0056                   .dbline 88
+ 0056           ; {  
+ 0056 4427              clr R20
+ 0058                   .dbline 89
+ 0058           ;       counter++;
+ 0058                   .dbline 90
+ 0058           ; }
+ 0058 08E0              ldi R16,8
+ 005A 10E0              ldi R17,0
+ 005C D1DF              xcall _delay_us
+ 005E                   .dbline 91
+ 005E           ; 
+ 005E 17C0              xjmp L23
+ 0060           L20:
+ 0060                   .dbline 92
+ 0060           ; /*******************************************
+ 0060                   .dbline 93
+ 0060           ; * 函数名称: interrupt_timer1()
+ 0060 67FF              sbrs R22,7
+ 0062 04C0              rjmp L24
+ 0064                   .dbline 94
+ 0064           ; * 函数功能: 
+ 0064 8BB3              in R24,0x1b
+ 0066 8260              ori R24,2
+ 0068 8BBB              out 0x1b,R24
+ 006A 03C0              xjmp L25
+ 006C           L24:
+ 006C                   .dbline 96
+ 006C           ; * 入口参数: 无
+ 006C           ; * 出口参数: 无
+ 006C 8BB3              in R24,0x1b
+ 006E 8D7F              andi R24,253
+ 0070 8BBB              out 0x1b,R24
+ 0072           L25:
+ 0072                   .dbline 97
+ 0072 8BB3              in R24,0x1b
+ 0074 8460              ori R24,4
+ 0076 8BBB              out 0x1b,R24
+ 0078                   .dbline 98
+ 0078 08E0              ldi R16,8
+ 007A 10E0              ldi R17,0
+ 007C C1DF              xcall _delay_us
+ 007E                   .dbline 99
+ 007E 660F              lsl R22
+ 0080                   .dbline 100
+ 0080 8BB3              in R24,0x1b
+ 0082 8B7F              andi R24,251
+ 0084 8BBB              out 0x1b,R24
+ 0086                   .dbline 101
+ 0086 08E0              ldi R16,8
+ 0088 10E0              ldi R17,0
+ 008A BADF              xcall _delay_us
+ 008C                   .dbline 102
+ 008C           L21:
+ 008C                   .dbline 91
+ 008C 4395              inc R20
+ 008E           L23:
+ 008E                   .dbline 91
+ 008E 4830              cpi R20,8
+ 0090 38F3              brlo L20
+ 0092                   .dbline -2
+ 0092           L19:
+ 0092 0E940000          xcall pop_gset2
+ 0096                   .dbline 0 ; func end
+ 0096 0895              ret
+ 0098                   .dbsym r i 20 c
+ 0098                   .dbsym r data 22 c
+ 0098                   .dbend
+ 0098                   .dbfunc e Receivebyte _Receivebyte fc
+ 0098           ;          temp2 -> R16
+ 0098           ;          temp1 -> R18
+ 0098           ;              i -> R20
+                        .even
+ 0098           _Receivebyte::
+ 0098 0E940000          xcall push_gset1
+ 009C                   .dbline -1
+ 009C                   .dbline 113
+ 009C           ; /********************************************/
+ 009C           ; void interrupt_timer1()
+ 009C           ; {
+ 009C           ;     CLI();//关总中断
+ 009C           ;     TCCR1B = 0X00;//定时器停止工作
+ 009C           ;       TIMSK &= ~ BIT(2);//关闭溢出中断
+ 009C           ;       EIMSK &= ~BIT(2); //关闭外部中断        
+ 009C           ;       flag++;//实现先检测红色,再检测蓝色,然后检测绿色,循环检测
+ 009C           ;       if(flag==1)
+ 009C           ;       {                
+ 009C           ;                red=counter;
+ 009C           ;                data[0]=counter/100+0x30;               
+ 009C           ;                counter=counter%100;
+ 009C           ;                data[1]=counter/10+0x30;
+ 009C           ;                counter=counter%10;
+ 009C           ;                data[2]=counter+0x30;          
+ 009C           ;                Locate_x_y(1,5);       
+ 009C                   .dbline 115
+ 009C           ;                for(i=0;i<3;i++)           
+ 009C           ;                        Writedata(data[i]);                    
+ 009C 0027              clr R16
+ 009E 2227              clr R18
+ 00A0                   .dbline 116
+ 00A0           ;               S2=0;//下次检测蓝色(S2,S3=0,1)
+ 00A0 4427              clr R20
+ 00A2 10C0              xjmp L30
+ 00A4           L27:
+ 00A4                   .dbline 117
+ 00A4           ;               S3=1;           
+ 00A4                   .dbline 118
+ 00A4           ;       }
+ 00A4 220F              lsl R18
+ 00A6                   .dbline 119
+ 00A6           ;       else if(flag==2)
+ 00A6 8BB3              in R24,0x1b
+ 00A8 8B7F              andi R24,251
+ 00AA 8BBB              out 0x1b,R24
+ 00AC                   .dbline 120
+ 00AC           ;       {
+ 00AC 8BB3              in R24,0x1b
+ 00AE 8460              ori R24,4
+ 00B0 8BBB              out 0x1b,R24
+ 00B2                   .dbline 121
+ 00B2           ;                blue=counter;
+ 00B2 8BB3              in R24,0x1b
+ 00B4 8B7F              andi R24,251
+ 00B6 8BBB              out 0x1b,R24
+ 00B8                   .dbline 122
+ 00B8           ;                data[0]=counter/100+0x30;               
+ 00B8 8BB3              in R24,0x1b
+ 00BA 8695              lsr R24
+ 00BC 8170              andi R24,1
+ 00BE 09F0              breq L31
+ 00C0                   .dbline 122
+ 00C0 2395              inc R18
+ 00C2           L31:
+ 00C2                   .dbline 123
+ 00C2           L28:
+ 00C2                   .dbline 116
+ 00C2 4395              inc R20
+ 00C4           L30:
+ 00C4                   .dbline 116
+ 00C4 4830              cpi R20,8
+ 00C6 70F3              brlo L27
+ 00C8                   .dbline 124
+ 00C8           ;                counter=counter%100;
+ 00C8           ;                data[1]=counter/10+0x30;
+ 00C8 4427              clr R20
+ 00CA 10C0              xjmp L36
+ 00CC           L33:
+ 00CC                   .dbline 125
+ 00CC           ;                counter=counter%10;
+ 00CC                   .dbline 126
+ 00CC           ;                data[2]=counter+0x30;          
+ 00CC 000F              lsl R16
+ 00CE                   .dbline 127
+ 00CE           ;                Locate_x_y(2,5);       
+ 00CE 8BB3              in R24,0x1b
+ 00D0 8B7F              andi R24,251
+ 00D2 8BBB              out 0x1b,R24
+ 00D4                   .dbline 128
+ 00D4           ;                for(i=0;i<3;i++)           
+ 00D4 8BB3              in R24,0x1b
+ 00D6 8460              ori R24,4
+ 00D8 8BBB              out 0x1b,R24
+ 00DA                   .dbline 129
+ 00DA           ;                        Writedata(data[i]);                            
+ 00DA 8BB3              in R24,0x1b
+ 00DC 8B7F              andi R24,251
+ 00DE 8BBB              out 0x1b,R24
+ 00E0                   .dbline 130
+ 00E0           ;               S2=1;//下次检测绿色(S2,S3=1,1)
+ 00E0 8BB3              in R24,0x1b
+ 00E2 8695              lsr R24
+ 00E4 8170              andi R24,1
+ 00E6 09F0              breq L37
+ 00E8                   .dbline 130
+ 00E8 0395              inc R16
+ 00EA           L37:
+ 00EA                   .dbline 131
+ 00EA           L34:
+ 00EA                   .dbline 124
+ 00EA 4395              inc R20
+ 00EC           L36:
+ 00EC                   .dbline 124
+ 00EC 4830              cpi R20,8
+ 00EE 70F3              brlo L33
+ 00F0                   .dbline 132
+ 00F0           ;               S3=1;
+ 00F0           ;       }
+ 00F0 802F              mov R24,R16
+ 00F2 8F70              andi R24,15
+ 00F4 022F              mov R16,R18
+ 00F6 007F              andi R16,240
+ 00F8 080F              add R16,R24
+ 00FA                   .dbline -2
+ 00FA           L26:
+ 00FA 0E940000          xcall pop_gset1
+ 00FE                   .dbline 0 ; func end
+ 00FE 0895              ret
+ 0100                   .dbsym r temp2 16 c
+ 0100                   .dbsym r temp1 18 c
+ 0100                   .dbsym r i 20 c
+ 0100                   .dbend
+ 0100                   .dbfunc e Checkbusy _Checkbusy fV
+                        .even
+ 0100           _Checkbusy::
+ 0100                   .dbline -1
+ 0100                   .dbline 142
+ 0100           ;     else if(flag==3)
+ 0100           ;       {
+ 0100           ;                green=counter;
+ 0100           ;                data[0]=counter/100+0x30;               
+ 0100           ;                counter=counter%100;
+ 0100           ;                data[1]=counter/10+0x30;
+ 0100           ;                counter=counter%10;
+ 0100           ;                data[2]=counter+0x30;  
+ 0100           ;                Locate_x_y(3,5);       
+ 0100           ;                for(i=0;i<3;i++)           
+ 0100           L40:
+ 0100                   .dbline 143
+ 0100           ;                        Writedata(data[i]);                             
+ 0100 0CEF              ldi R16,252
+ 0102 A6DF              xcall _Sendbyte
+ 0104           L41:
+ 0104                   .dbline 144
+ 0104           ;               S2=0;//下次检测红色(S2,S3=0,0)
+ 0104 C9DF              xcall _Receivebyte
+ 0106 07FD              sbrc R16,7
+ 0108 FBCF              rjmp L40
+ 010A                   .dbline -2
+ 010A           L39:
+ 010A                   .dbline 0 ; func end
+ 010A 0895              ret
+ 010C                   .dbend
+ 010C                   .dbfunc e Writecommand _Writecommand fV
+ 010C           ;           data -> R20
+                        .even
+ 010C           _Writecommand::
+ 010C 0E940000          xcall push_gset1
+ 0110 402F              mov R20,R16
+ 0112                   .dbline -1
+ 0112                   .dbline 154
+ 0112           ;               S3=0;
+ 0112           ;       }
+ 0112           ;       else if(flag==4) 
+ 0112           ;       {      
+ 0112           ;            flag=0;             
+ 0112           ;                if((red+5)>(blue+green))                
+ 0112           ;                    Display_x_y_data(0,5,"红色");
+ 0112           ;                else if((blue+8>red)&&(blue+2>green))
+ 0112           ;                    Display_x_y_data(0,5,"蓝色");              
+ 0112           ;                else if((green-3<red)&&(green-15>blue))
+ 0112                   .dbline 155
+ 0112           ;                    Display_x_y_data(0,5,"黄色");              
+ 0112 8BB3              in R24,0x1b
+ 0114 8160              ori R24,1
+ 0116 8BBB              out 0x1b,R24
+ 0118                   .dbline 156
+ 0118           ;                else if((green+5>red)&&(green>blue))
+ 0118 F3DF              xcall _Checkbusy
+ 011A                   .dbline 157
+ 011A           ;                    Display_x_y_data(0,5,"绿色");                 
+ 011A 08EF              ldi R16,248
+ 011C 99DF              xcall _Sendbyte
+ 011E                   .dbline 158
+ 011E           ;               /*else if((blue>red)&&(green>blue))
+ 011E 042F              mov R16,R20
+ 0120 007F              andi R16,240
+ 0122 96DF              xcall _Sendbyte
+ 0124                   .dbline 159
+ 0124           ;                    Display_x_y_data(0,5,"白色");*/
+ 0124 042F              mov R16,R20
+ 0126 0F70              andi R16,15
+ 0128 0F70              andi R16,#0x0F
+ 012A 0295              swap R16
+ 012C 91DF              xcall _Sendbyte
+ 012E                   .dbline 160
+ 012E           ;                else
+ 012E 8BB3              in R24,0x1b
+ 0130 8E7F              andi R24,254
+ 0132 8BBB              out 0x1b,R24
+ 0134                   .dbline -2
+ 0134           L43:
+ 0134 0E940000          xcall pop_gset1
+ 0138                   .dbline 0 ; func end
+ 0138 0895              ret
+ 013A                   .dbsym r data 20 c
+ 013A                   .dbend
+ 013A                   .dbfunc e Writedata _Writedata fV
+ 013A           ;           data -> R20
+                        .even
+ 013A           _Writedata::
+ 013A 0E940000          xcall push_gset1
+ 013E 402F              mov R20,R16
+ 0140                   .dbline -1
+ 0140                   .dbline 169
+ 0140           ;                    Display_x_y_data(0,5,"未知");               
+ 0140           ;       }
+ 0140           ;       //delay_ms(200); 
+ 0140           ;       counter = 0;//清零外中断计数标志                
+ 0140           ;       TCCR1B = 0X02;// 设置分频数为8
+ 0140           ;       TCNT1H = 0x63;//重新装入初值
+ 0140           ;     TCNT1L = 0xC0;
+ 0140           ;       TIMSK |=  BIT(2);//打开溢出中断
+ 0140           ;       EIMSK |= BIT(2); //打开外部中断         
+ 0140                   .dbline 170
+ 0140           ;       SEI();//开总中断
+ 0140 8BB3              in R24,0x1b
+ 0142 8160              ori R24,1
+ 0144 8BBB              out 0x1b,R24
+ 0146                   .dbline 171
+ 0146           ; }
+ 0146 DCDF              xcall _Checkbusy
+ 0148                   .dbline 172
+ 0148           ; }
+ 0148 0AEF              ldi R16,250
+ 014A 82DF              xcall _Sendbyte
+ 014C                   .dbline 173
+ 014C           ; }
+ 014C 042F              mov R16,R20
+ 014E 007F              andi R16,240
+ 0150 7FDF              xcall _Sendbyte
+ 0152                   .dbline 174
+ 0152           ; }
+ 0152 042F              mov R16,R20
+ 0154 0F70              andi R16,15
+ 0156 0F70              andi R16,#0x0F
+ 0158 0295              swap R16
+ 015A 7ADF              xcall _Sendbyte
+ 015C                   .dbline 175
+ 015C           ; }
+ 015C 8BB3              in R24,0x1b
+ 015E 8E7F              andi R24,254
+ 0160 8BBB              out 0x1b,R24
+ 0162                   .dbline -2
+ 0162           L44:
+ 0162 0E940000          xcall pop_gset1
+ 0166                   .dbline 0 ; func end
+ 0166 0895              ret
+ 0168                   .dbsym r data 20 c
+ 0168                   .dbend
+ 0168                   .dbfunc e Locate_x_y _Locate_x_y fV
+ 0168           ;           addr -> R20
+ 0168           ;              y -> R22
+ 0168           ;              x -> R10
+                        .even
+ 0168           _Locate_x_y::
+ 0168 0E940000          xcall push_gset3
+ 016C 622F              mov R22,R18
+ 016E A02E              mov R10,R16
+ 0170                   .dbline -1
+ 0170                   .dbline 185
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170           ; }
+ 0170                   .dbline 186
+ 0170           ; }
+ 0170 40E8              ldi R20,128
+ 0172                   .dbline 187
+ 0172           ; }
+ 0172 00E8              ldi R16,128
+ 0174 CBDF              xcall _Writecommand
+ 0176                   .dbline 188
+ 0176           ; }
+ 0176 BB24              clr R11
+ 0178 AA20              tst R10
+ 017A 11F4              brne X4
+ 017C BB20              tst R11
+ 017E 71F0              breq L49
+ 0180           X4:
+ 0180 C501              movw R24,R10
+ 0182 8130              cpi R24,1
+ 0184 E0E0              ldi R30,0
+ 0186 9E07              cpc R25,R30
+ 0188 61F0              breq L50
+ 018A 8230              cpi R24,2
+ 018C E0E0              ldi R30,0
+ 018E 9E07              cpc R25,R30
+ 0190 59F0              breq L51
+ 0192 8330              cpi R24,3
+ 0194 E0E0              ldi R30,0
+ 0196 9E07              cpc R25,R30
+ 0198 51F0              breq L52
+ 019A 0BC0              xjmp L47
+ 019C           X5:
+ 019C                   .dbline 189
+ 019C           ; }
+ 019C           L49:
+ 019C                   .dbline 190
+ 019C           ; }
+ 019C 462F              mov R20,R22
+ 019E 4058              subi R20,128    ; addi 128
+ 01A0                   .dbline 190
+ 01A0 08C0              xjmp L47
+ 01A2           L50:
+ 01A2                   .dbline 191
+ 01A2           ; }
+ 01A2 462F              mov R20,R22
+ 01A4 4057              subi R20,112    ; addi 144
+ 01A6                   .dbline 191
+ 01A6 05C0              xjmp L47
+ 01A8           L51:
+ 01A8                   .dbline 192
+ 01A8           ; }
+ 01A8 462F              mov R20,R22
+ 01AA 4857              subi R20,120    ; addi 136
+ 01AC                   .dbline 192
+ 01AC 02C0              xjmp L47
+ 01AE           L52:
+ 01AE                   .dbline 193
+ 01AE           ; }
+ 01AE 462F              mov R20,R22
+ 01B0 4856              subi R20,104    ; addi 152
+ 01B2                   .dbline 193
+ 01B2                   .dbline 194
+ 01B2           ; }
+ 01B2           L47:
+ 01B2                   .dbline 196
+ 01B2           ; }
+ 01B2           ; }
+ 01B2 042F              mov R16,R20
+ 01B4 ABDF              xcall _Writecommand
+ 01B6                   .dbline -2
+ 01B6           L45:
+ 01B6 0E940000          xcall pop_gset3
+ 01BA                   .dbline 0 ; func end
+ 01BA 0895              ret
+ 01BC                   .dbsym r addr 20 c
+ 01BC                   .dbsym r y 22 c
+ 01BC                   .dbsym r x 10 c
+ 01BC                   .dbend
+ 01BC                   .dbfunc e Display_x_y_symbol _Display_x_y_symbol fV
+ 01BC           ;              j -> R20
+ 01BC           ;              i -> R22
+ 01BC           ;           data -> y+4
+ 01BC           ;              y -> R22
+ 01BC           ;              x -> R20
+                        .even
+ 01BC           _Display_x_y_symbol::
+ 01BC 0E940000          xcall push_gset2
+ 01C0 622F              mov R22,R18
+ 01C2 402F              mov R20,R16
+ 01C4                   .dbline -1
+ 01C4                   .dbline 205
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4           ; }
+ 01C4                   .dbline 207
+ 01C4           ; }
+ 01C4           ; }
+ 01C4 262F              mov R18,R22
+ 01C6 042F              mov R16,R20
+ 01C8 CFDF              xcall _Locate_x_y
+ 01CA                   .dbline 208
+ 01CA           ; }
+ 01CA 4C81              ldd R20,y+4
+ 01CC 5D81              ldd R21,y+5
+ 01CE                   .dbline 209
+ 01CE           ; }
+ 01CE BA01              movw R22,R20
+ 01D0 672F              mov R22,R23
+ 01D2 7727              clr R23
+ 01D4                   .dbline 210
+ 01D4           ; }
+ 01D4 062F              mov R16,R22
+ 01D6 B1DF              xcall _Writedata
+ 01D8                   .dbline 211
+ 01D8           ; }
+ 01D8 042F              mov R16,R20
+ 01DA AFDF              xcall _Writedata
+ 01DC                   .dbline -2
+ 01DC           L53:
+ 01DC 0E940000          xcall pop_gset2
+ 01E0                   .dbline 0 ; func end
+ 01E0 0895              ret
+ 01E2                   .dbsym r j 20 c
+ 01E2                   .dbsym r i 22 c
+ 01E2                   .dbsym l data 4 i
+ 01E2                   .dbsym r y 22 c
+ 01E2                   .dbsym r x 20 c
+ 01E2                   .dbend
+ 01E2                   .dbfunc e Write_string _Write_string fV
+ 01E2           ;              s -> R20,R21
+                        .even
+ 01E2           _Write_string::
+ 01E2 0E940000          xcall push_gset1
+ 01E6 A801              movw R20,R16
+ 01E8                   .dbline -1
+ 01E8                   .dbline 220
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8           ; }
+ 01E8                   .dbline 221
+ 01E8           ; }
+ 01E8 05C0              xjmp L58
+ 01EA           L55:
+ 01EA                   .dbline 222
+ 01EA                   .dbline 223
+ 01EA FA01              movw R30,R20
+ 01EC 0081              ldd R16,z+0
+ 01EE A5DF              xcall _Writedata
+ 01F0                   .dbline 224
+ 01F0           L56:
+ 01F0                   .dbline 221
+ 01F0 4F5F              subi R20,255  ; offset = 1
+ 01F2 5F4F              sbci R21,255
+ 01F4           L58:
+ 01F4                   .dbline 221
+ 01F4 FA01              movw R30,R20
+ 01F6 2080              ldd R2,z+0
+ 01F8 2220              tst R2
+ 01FA B9F7              brne L55
+ 01FC                   .dbline -2
+ 01FC           L54:
+ 01FC 0E940000          xcall pop_gset1
+ 0200                   .dbline 0 ; func end
+ 0200 0895              ret
+ 0202                   .dbsym r s 20 pc
+ 0202                   .dbend
+ 0202                   .dbfunc e Display_x_y_data _Display_x_y_data fV
+ 0202           ;           data -> R20,R21
+ 0202           ;              y -> R22
+ 0202           ;              x -> R10
+                        .even
+ 0202           _Display_x_y_data::
+ 0202 0E940000          xcall push_gset3
+ 0206 622F              mov R22,R18
+ 0208 A02E              mov R10,R16
+ 020A 4E81              ldd R20,y+6
+ 020C 5F81              ldd R21,y+7
+ 020E                   .dbline -1
+ 020E                   .dbline 233
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E           ; }
+ 020E                   .dbline 234
+ 020E           ; }
+ 020E 88E0              ldi R24,8
+ 0210 8A9D              mul R24,R10
+ 0212 F001              movw R30,R0
+ 0214 262E              mov R2,R22
+ 0216 3324              clr R3
+ 0218 E20D              add R30,R2
+ 021A F31D              adc R31,R3
+ 021C 80E0              ldi R24,<_AC_TABLE
+ 021E 90E0              ldi R25,>_AC_TABLE
+ 0220 E80F              add R30,R24
+ 0222 F91F              adc R31,R25
+ 0224 0081              ldd R16,z+0
+ 0226 72DF              xcall _Writecommand
+ 0228                   .dbline 235
+ 0228           ; }
+ 0228 1BC0              xjmp L63
+ 022A           L60:
+ 022A                   .dbline 236
+ 022A           ; }
+ 022A                   .dbline 237
+ 022A           ; }
+ 022A 6031              cpi R22,16
+ 022C 99F4              brne L64
+ 022E                   .dbline 238
+ 022E           ; }
+ 022E                   .dbline 239
+ 022E           ; }
+ 022E 6627              clr R22
+ 0230                   .dbline 240
+ 0230           ; }
+ 0230 A394              inc R10
+ 0232                   .dbline 241
+ 0232           ; }
+ 0232 8A2D              mov R24,R10
+ 0234 8430              cpi R24,4
+ 0236 09F4              brne L66
+ 0238                   .dbline 241
+ 0238 AA24              clr R10
+ 023A           L66:
+ 023A                   .dbline 242
+ 023A           ; }
+ 023A 88E0              ldi R24,8
+ 023C 8A9D              mul R24,R10
+ 023E F001              movw R30,R0
+ 0240 262E              mov R2,R22
+ 0242 3324              clr R3
+ 0244 E20D              add R30,R2
+ 0246 F31D              adc R31,R3
+ 0248 80E0              ldi R24,<_AC_TABLE
+ 024A 90E0              ldi R25,>_AC_TABLE
+ 024C E80F              add R30,R24
+ 024E F91F              adc R31,R25
+ 0250 0081              ldd R16,z+0
+ 0252 5CDF              xcall _Writecommand
+ 0254                   .dbline 243
+ 0254           ; }
+ 0254           L64:
+ 0254                   .dbline 244
+ 0254 FA01              movw R30,R20
+ 0256 0081              ldd R16,z+0
+ 0258 70DF              xcall _Writedata
+ 025A                   .dbline 245
+ 025A 6395              inc R22
+ 025C                   .dbline 246
+ 025C           L61:
+ 025C                   .dbline 235
+ 025C 4F5F              subi R20,255  ; offset = 1
+ 025E 5F4F              sbci R21,255
+ 0260           L63:
+ 0260                   .dbline 235
+ 0260 FA01              movw R30,R20
+ 0262 2080              ldd R2,z+0
+ 0264 2220              tst R2
+ 0266 09F7              brne L60
+ 0268                   .dbline -2
+ 0268           L59:
+ 0268 0E940000          xcall pop_gset3
+ 026C                   .dbline 0 ; func end
+ 026C 0895              ret
+ 026E                   .dbsym r data 20 pc
+ 026E                   .dbsym r y 22 c
+ 026E                   .dbsym r x 10 c
+ 026E                   .dbend
+ 026E                   .dbfunc e LcmClearTXT _LcmClearTXT fV
+ 026E           ;              i -> R20
+                        .even
+ 026E           _LcmClearTXT::
+ 026E 0E940000          xcall push_gset1
+ 0272                   .dbline -1
+ 0272                   .dbline 256
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272           ; }
+ 0272                   .dbline 258
+ 0272           ; }
+ 0272           ; }
+ 0272 00E3              ldi R16,48
+ 0274 4BDF              xcall _Writecommand
+ 0276                   .dbline 259
+ 0276           ; }
+ 0276 00E8              ldi R16,128
+ 0278 49DF              xcall _Writecommand
+ 027A                   .dbline 260
+ 027A           ; }
+ 027A 4427              clr R20
+ 027C 03C0              xjmp L72
+ 027E           L69:
+ 027E                   .dbline 261
+ 027E 00E2              ldi R16,32
+ 0280 5CDF              xcall _Writedata
+ 0282           L70:
+ 0282                   .dbline 260
+ 0282 4395              inc R20
+ 0284           L72:
+ 0284                   .dbline 260
+ 0284 4034              cpi R20,64
+ 0286 D8F3              brlo L69
+ 0288                   .dbline -2
+ 0288           L68:
+ 0288 0E940000          xcall pop_gset1
+ 028C                   .dbline 0 ; func end
+ 028C 0895              ret
+ 028E                   .dbsym r i 20 c
+ 028E                   .dbend
+ 028E                   .dbfunc e Init_12864 _Init_12864 fV
+                        .even
+ 028E           _Init_12864::
+ 028E                   .dbline -1
+ 028E                   .dbline 271
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E           ; }
+ 028E                   .dbline 272
+ 028E           ; }
+ 028E 02E3              ldi R16,50
+ 0290 10E0              ldi R17,0
+ 0292 CADE              xcall _delay_ms
+ 0294                   .dbline 273
+ 0294           ; }
+ 0294 00E3              ldi R16,48
+ 0296 3ADF              xcall _Writecommand
+ 0298                   .dbline 274
+ 0298           ; }
+ 0298 03E0              ldi R16,3
+ 029A 38DF              xcall _Writecommand
+ 029C                   .dbline 275
+ 029C           ; }
+ 029C 0CE0              ldi R16,12
+ 029E 36DF              xcall _Writecommand
+ 02A0                   .dbline 276
+ 02A0           ; }
+ 02A0 01E0              ldi R16,1
+ 02A2 34DF              xcall _Writecommand
+ 02A4                   .dbline 277
+ 02A4           ; }
+ 02A4 06E0              ldi R16,6
+ 02A6 32DF              xcall _Writecommand
+ 02A8                   .dbline -2
+ 02A8           L73:
+ 02A8                   .dbline 0 ; func end
+ 02A8 0895              ret
+ 02AA                   .dbend
+                        .area data(ram, con, rel)
+ 0020                   .dbfile C:\DOCUME~1\Administrator\桌面\程序/12864.h
+ 0020           _red::
+ 0020                   .blkb 1
+                        .area idata
+ 0020 00                .byte 0
+                        .area data(ram, con, rel)
+ 0021                   .dbfile C:\DOCUME~1\Administrator\桌面\程序/12864.h
+ 0021                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0021                   .dbsym e red _red c
+ 0021           _blue::
+ 0021                   .blkb 1
+                        .area idata
+ 0021 00                .byte 0
+                        .area data(ram, con, rel)
+ 0022                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0022                   .dbsym e blue _blue c
+ 0022           _green::
+ 0022                   .blkb 1
+                        .area idata
+ 0022 00                .byte 0
+                        .area data(ram, con, rel)
+ 0023                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0023                   .dbsym e green _green c
+ 0023           _flag::
+ 0023                   .blkb 1
+                        .area idata
+ 0023 00                .byte 0
+                        .area data(ram, con, rel)
+ 0024                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0024                   .dbsym e flag _flag c
+ 0024           _i::
+ 0024                   .blkb 1
+                        .area idata
+ 0024 00                .byte 0
+                        .area data(ram, con, rel)
+ 0025                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0025                   .dbsym e i _i c
+ 0025           _j::
+ 0025                   .blkb 1
+                        .area idata
+ 0025 00                .byte 0
+                        .area data(ram, con, rel)
+ 0026                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0026                   .dbsym e j _j c
+ 0026           _data::
+ 0026                   .blkb 1
+                        .area idata
+ 0026 00                .byte 0
+                        .area data(ram, con, rel)
+ 0027                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0027                   .blkb 4
+                        .area idata
+ 0027 00000000          .byte 0,0,0,0
+                        .area data(ram, con, rel)
+ 002B                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 002B                   .dbsym e data _data A[5:5]c
+ 002B           _counter::
+ 002B                   .blkb 2
+                        .area idata
+ 002B 0000              .word 0
+                        .area data(ram, con, rel)
+ 002D                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 002D                   .dbsym e counter _counter i
+                        .area vector(rom, abs)
+                        .org 12
+ 000C 0C949801          jmp _interrupt_int2
+                        .area data(ram, con, rel)
+ 002D                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+                        .area vector(rom, abs)
+                        .org 56
+ 0038 0C94AA01          jmp _interrupt_timer1
+                        .area data(ram, con, rel)
+ 002D                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+                        .area text(rom, con, rel)
+ 02AA                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 02AA                   .dbfunc e int2_init _int2_init fV
+                        .even
+ 02AA           _int2_init::
+ 02AA                   .dbline -1
+ 02AA                   .dbline 29
+ 02AA                   .dbline 30
+ 02AA 8A98              cbi 0x11,2
+ 02AC                   .dbline 31
+ 02AC 929A              sbi 0x12,2
+ 02AE                   .dbline 32
+ 02AE 80E2              ldi R24,32
+ 02B0 80936A00          sts 106,R24
+ 02B4                   .dbline -2
+ 02B4           L74:
+ 02B4                   .dbline 0 ; func end
+ 02B4 0895              ret
+ 02B6                   .dbend
+ 02B6                   .dbfunc e timer1_init _timer1_init fV
+                        .even
+ 02B6           _timer1_init::
+ 02B6                   .dbline -1
+ 02B6                   .dbline 42
+ 02B6                   .dbline 43
+ 02B6 82E0              ldi R24,2
+ 02B8 8EBD              out 0x2e,R24
+ 02BA                   .dbline 44
+ 02BA 83E6              ldi R24,99
+ 02BC 8DBD              out 0x2d,R24
+ 02BE                   .dbline 45
+ 02BE 80EC              ldi R24,192
+ 02C0 8CBD              out 0x2c,R24
+ 02C2                   .dbline -2
+ 02C2           L75:
+ 02C2                   .dbline 0 ; func end
+ 02C2 0895              ret
+ 02C4                   .dbend
+ 02C4                   .dbfunc e port_init _port_init fV
+                        .even
+ 02C4           _port_init::
+ 02C4                   .dbline -1
+ 02C4                   .dbline 54
+ 02C4                   .dbline 55
+ 02C4 8FEF              ldi R24,255
+ 02C6 8ABB              out 0x1a,R24
+ 02C8                   .dbline 56
+ 02C8 84BB              out 0x14,R24
+ 02CA                   .dbline -2
+ 02CA           L76:
+ 02CA                   .dbline 0 ; func end
+ 02CA 0895              ret
+ 02CC                   .dbend
+ 02CC                   .dbfunc e main _main fV
+                        .even
+ 02CC           _main::
+ 02CC 2297              sbiw R28,2
+ 02CE                   .dbline -1
+ 02CE                   .dbline 63
+ 02CE                   .dbline 64
+ 02CE FADF              xcall _port_init
+ 02D0                   .dbline 65
+ 02D0 ECDF              xcall _int2_init
+ 02D2                   .dbline 66
+ 02D2 F1DF              xcall _timer1_init
+ 02D4                   .dbline 67
+ 02D4 DCDF              xcall _Init_12864
+ 02D6                   .dbline 68
+ 02D6 CBDF              xcall _LcmClearTXT
+ 02D8                   .dbline 69
+ 02D8 80E0              ldi R24,<L78
+ 02DA 90E0              ldi R25,>L78
+ 02DC 9983              std y+1,R25
+ 02DE 8883              std y+0,R24
+ 02E0 2227              clr R18
+ 02E2 0027              clr R16
+ 02E4 8EDF              xcall _Display_x_y_data
+ 02E6                   .dbline 70
+ 02E6 80E0              ldi R24,<L79
+ 02E8 90E0              ldi R25,>L79
+ 02EA 9983              std y+1,R25
+ 02EC 8883              std y+0,R24
+ 02EE 2227              clr R18
+ 02F0 01E0              ldi R16,1
+ 02F2 87DF              xcall _Display_x_y_data
+ 02F4                   .dbline 71
+ 02F4 80E0              ldi R24,<L80
+ 02F6 90E0              ldi R25,>L80
+ 02F8 9983              std y+1,R25
+ 02FA 8883              std y+0,R24
+ 02FC 2227              clr R18
+ 02FE 02E0              ldi R16,2
+ 0300 80DF              xcall _Display_x_y_data
+ 0302                   .dbline 72
+ 0302 80E0              ldi R24,<L81
+ 0304 90E0              ldi R25,>L81
+ 0306 9983              std y+1,R25
+ 0308 8883              std y+0,R24
+ 030A 2227              clr R18
+ 030C 03E0              ldi R16,3
+ 030E 79DF              xcall _Display_x_y_data
+ 0310                   .dbline 73
+ 0310 85B3              in R24,0x15
+ 0312 8F77              andi R24,127
+ 0314 85BB              out 0x15,R24
+ 0316                   .dbline 74
+ 0316 85B3              in R24,0x15
+ 0318 8F7B              andi R24,191
+ 031A 85BB              out 0x15,R24
+ 031C                   .dbline 75
+ 031C 7894              sei
+ 031E                   .dbline 76
+ 031E 89B7              in R24,0x39
+ 0320 8460              ori R24,4
+ 0322 89BF              out 0x39,R24
+ 0324                   .dbline 77
+ 0324 87B7              in R24,0x37
+ 0326 8460              ori R24,4
+ 0328 87BF              out 0x37,R24
+ 032A           L82:
+ 032A                   .dbline 78
+ 032A           L83:
+ 032A                   .dbline 78
+ 032A FFCF              xjmp L82
+ 032C           X6:
+ 032C                   .dbline -2
+ 032C           L77:
+ 032C 2296              adiw R28,2
+ 032E                   .dbline 0 ; func end
+ 032E 0895              ret
+ 0330                   .dbend
+ 0330                   .dbfunc e interrupt_int2 _interrupt_int2 fV
+                        .even
+ 0330           _interrupt_int2::
+ 0330 8A93              st -y,R24
+ 0332 9A93              st -y,R25
+ 0334 8FB7              in R24,0x3f
+ 0336 8A93              st -y,R24
+ 0338                   .dbline -1
+ 0338                   .dbline 88
+ 0338                   .dbline 89
+ 0338 80912B00          lds R24,_counter
+ 033C 90912C00          lds R25,_counter+1
+ 0340 0196              adiw R24,1
+ 0342 90932C00          sts _counter+1,R25
+ 0346 80932B00          sts _counter,R24
+ 034A                   .dbline -2
+ 034A           L85:
+ 034A 8991              ld R24,y+
+ 034C 8FBF              out 0x3f,R24
+ 034E 9991              ld R25,y+
+ 0350 8991              ld R24,y+
+ 0352                   .dbline 0 ; func end
+ 0352 1895              reti
+ 0354                   .dbend
+ 0354                   .dbfunc e interrupt_timer1 _interrupt_timer1 fV
+                        .even
+ 0354           _interrupt_timer1::
+ 0354 0E940000          xcall push_lset
+ 0358 2297              sbiw R28,2
+ 035A                   .dbline -1
+ 035A                   .dbline 99
+ 035A                   .dbline 100
+ 035A F894              cli
+ 035C                   .dbline 101
+ 035C 2224              clr R2
+ 035E 2EBC              out 0x2e,R2
+ 0360                   .dbline 102
+ 0360 87B7              in R24,0x37
+ 0362 8B7F              andi R24,251
+ 0364 87BF              out 0x37,R24
+ 0366                   .dbline 103
+ 0366 89B7              in R24,0x39
+ 0368 8B7F              andi R24,251
+ 036A 89BF              out 0x39,R24
+ 036C                   .dbline 104
+ 036C 80912300          lds R24,_flag
+ 0370 8F5F              subi R24,255    ; addi 1
+ 0372 80932300          sts _flag,R24
+ 0376                   .dbline 105
+ 0376 80912300          lds R24,_flag
+ 037A 8130              cpi R24,1
+ 037C 09F0              breq X7
+ 037E 5DC0              xjmp L87
+ 0380           X7:
+ 0380                   .dbline 106
+ 0380                   .dbline 107
+ 0380 20902B00          lds R2,_counter
+ 0384 30902C00          lds R3,_counter+1
+ 0388 20922000          sts _red,R2
+ 038C                   .dbline 108
+ 038C 24E6              ldi R18,100
+ 038E 30E0              ldi R19,0
+ 0390 00912B00          lds R16,_counter
+ 0394 10912C00          lds R17,_counter+1
+ 0398 0E940000          xcall div16u
+ 039C C801              movw R24,R16
+ 039E C096              adiw R24,48
+ 03A0 80932600          sts _data,R24
+ 03A4                   .dbline 109
+ 03A4 24E6              ldi R18,100
+ 03A6 30E0              ldi R19,0
+ 03A8 00912B00          lds R16,_counter
+ 03AC 10912C00          lds R17,_counter+1
+ 03B0 0E940000          xcall mod16u
+ 03B4 10932C00          sts _counter+1,R17
+ 03B8 00932B00          sts _counter,R16
+ 03BC                   .dbline 110
+ 03BC 2AE0              ldi R18,10
+ 03BE 30E0              ldi R19,0
+ 03C0 00912B00          lds R16,_counter
+ 03C4 10912C00          lds R17,_counter+1
+ 03C8 0E940000          xcall div16u
+ 03CC C801              movw R24,R16
+ 03CE C096              adiw R24,48
+ 03D0 80932700          sts _data+1,R24
+ 03D4                   .dbline 111
+ 03D4 2AE0              ldi R18,10
+ 03D6 30E0              ldi R19,0
+ 03D8 00912B00          lds R16,_counter
+ 03DC 10912C00          lds R17,_counter+1
+ 03E0 0E940000          xcall mod16u
+ 03E4 10932C00          sts _counter+1,R17
+ 03E8 00932B00          sts _counter,R16
+ 03EC                   .dbline 112
+ 03EC 80912B00          lds R24,_counter
+ 03F0 90912C00          lds R25,_counter+1
+ 03F4 C096              adiw R24,48
+ 03F6 80932800          sts _data+2,R24
+ 03FA                   .dbline 113
+ 03FA 25E0              ldi R18,5
+ 03FC 01E0              ldi R16,1
+ 03FE B4DE              xcall _Locate_x_y
+ 0400                   .dbline 114
+ 0400 2224              clr R2
+ 0402 20922400          sts _i,R2
+ 0406 0EC0              xjmp L94
+ 0408           L91:
+ 0408                   .dbline 115
+ 0408 80E0              ldi R24,<_data
+ 040A 90E0              ldi R25,>_data
+ 040C E0912400          lds R30,_i
+ 0410 FF27              clr R31
+ 0412 E80F              add R30,R24
+ 0414 F91F              adc R31,R25
+ 0416 0081              ldd R16,z+0
+ 0418 90DE              xcall _Writedata
+ 041A           L92:
+ 041A                   .dbline 114
+ 041A 80912400          lds R24,_i
+ 041E 8F5F              subi R24,255    ; addi 1
+ 0420 80932400          sts _i,R24
+ 0424           L94:
+ 0424                   .dbline 114
+ 0424 80912400          lds R24,_i
+ 0428 8330              cpi R24,3
+ 042A 70F3              brlo L91
+ 042C                   .dbline 116
+ 042C 85B3              in R24,0x15
+ 042E 8F77              andi R24,127
+ 0430 85BB              out 0x15,R24
+ 0432                   .dbline 117
+ 0432 85B3              in R24,0x15
+ 0434 8064              ori R24,64
+ 0436 85BB              out 0x15,R24
+ 0438                   .dbline 118
+ 0438 26C1              xjmp L88
+ 043A           L87:
+ 043A                   .dbline 119
+ 043A 80912300          lds R24,_flag
+ 043E 8230              cpi R24,2
+ 0440 09F0              breq X8
+ 0442 5DC0              xjmp L95
+ 0444           X8:
+ 0444                   .dbline 120
+ 0444                   .dbline 121
+ 0444 20902B00          lds R2,_counter
+ 0448 30902C00          lds R3,_counter+1
+ 044C 20922100          sts _blue,R2
+ 0450                   .dbline 122
+ 0450 24E6              ldi R18,100
+ 0452 30E0              ldi R19,0
+ 0454 00912B00          lds R16,_counter
+ 0458 10912C00          lds R17,_counter+1
+ 045C 0E940000          xcall div16u
+ 0460 C801              movw R24,R16
+ 0462 C096              adiw R24,48
+ 0464 80932600          sts _data,R24
+ 0468                   .dbline 123
+ 0468 24E6              ldi R18,100
+ 046A 30E0              ldi R19,0
+ 046C 00912B00          lds R16,_counter
+ 0470 10912C00          lds R17,_counter+1
+ 0474 0E940000          xcall mod16u
+ 0478 10932C00          sts _counter+1,R17
+ 047C 00932B00          sts _counter,R16
+ 0480                   .dbline 124
+ 0480 2AE0              ldi R18,10
+ 0482 30E0              ldi R19,0
+ 0484 00912B00          lds R16,_counter
+ 0488 10912C00          lds R17,_counter+1
+ 048C 0E940000          xcall div16u
+ 0490 C801              movw R24,R16
+ 0492 C096              adiw R24,48
+ 0494 80932700          sts _data+1,R24
+ 0498                   .dbline 125
+ 0498 2AE0              ldi R18,10
+ 049A 30E0              ldi R19,0
+ 049C 00912B00          lds R16,_counter
+ 04A0 10912C00          lds R17,_counter+1
+ 04A4 0E940000          xcall mod16u
+ 04A8 10932C00          sts _counter+1,R17
+ 04AC 00932B00          sts _counter,R16
+ 04B0                   .dbline 126
+ 04B0 80912B00          lds R24,_counter
+ 04B4 90912C00          lds R25,_counter+1
+ 04B8 C096              adiw R24,48
+ 04BA 80932800          sts _data+2,R24
+ 04BE                   .dbline 127
+ 04BE 25E0              ldi R18,5
+ 04C0 02E0              ldi R16,2
+ 04C2 52DE              xcall _Locate_x_y
+ 04C4                   .dbline 128
+ 04C4 2224              clr R2
+ 04C6 20922400          sts _i,R2
+ 04CA 0EC0              xjmp L102
+ 04CC           L99:
+ 04CC                   .dbline 129
+ 04CC 80E0              ldi R24,<_data
+ 04CE 90E0              ldi R25,>_data
+ 04D0 E0912400          lds R30,_i
+ 04D4 FF27              clr R31
+ 04D6 E80F              add R30,R24
+ 04D8 F91F              adc R31,R25
+ 04DA 0081              ldd R16,z+0
+ 04DC 2EDE              xcall _Writedata
+ 04DE           L100:
+ 04DE                   .dbline 128
+ 04DE 80912400          lds R24,_i
+ 04E2 8F5F              subi R24,255    ; addi 1
+ 04E4 80932400          sts _i,R24
+ 04E8           L102:
+ 04E8                   .dbline 128
+ 04E8 80912400          lds R24,_i
+ 04EC 8330              cpi R24,3
+ 04EE 70F3              brlo L99
+ 04F0                   .dbline 130
+ 04F0 85B3              in R24,0x15
+ 04F2 8068              ori R24,128
+ 04F4 85BB              out 0x15,R24
+ 04F6                   .dbline 131
+ 04F6 85B3              in R24,0x15
+ 04F8 8064              ori R24,64
+ 04FA 85BB              out 0x15,R24
+ 04FC                   .dbline 132
+ 04FC C4C0              xjmp L96
+ 04FE           L95:
+ 04FE                   .dbline 133
+ 04FE 80912300          lds R24,_flag
+ 0502 8330              cpi R24,3
+ 0504 09F0              breq X9
+ 0506 5DC0              xjmp L103
+ 0508           X9:
+ 0508                   .dbline 134
+ 0508                   .dbline 135
+ 0508 20902B00          lds R2,_counter
+ 050C 30902C00          lds R3,_counter+1
+ 0510 20922200          sts _green,R2
+ 0514                   .dbline 136
+ 0514 24E6              ldi R18,100
+ 0516 30E0              ldi R19,0
+ 0518 00912B00          lds R16,_counter
+ 051C 10912C00          lds R17,_counter+1
+ 0520 0E940000          xcall div16u
+ 0524 C801              movw R24,R16
+ 0526 C096              adiw R24,48
+ 0528 80932600          sts _data,R24
+ 052C                   .dbline 137
+ 052C 24E6              ldi R18,100
+ 052E 30E0              ldi R19,0
+ 0530 00912B00          lds R16,_counter
+ 0534 10912C00          lds R17,_counter+1
+ 0538 0E940000          xcall mod16u
+ 053C 10932C00          sts _counter+1,R17
+ 0540 00932B00          sts _counter,R16
+ 0544                   .dbline 138
+ 0544 2AE0              ldi R18,10
+ 0546 30E0              ldi R19,0
+ 0548 00912B00          lds R16,_counter
+ 054C 10912C00          lds R17,_counter+1
+ 0550 0E940000          xcall div16u
+ 0554 C801              movw R24,R16
+ 0556 C096              adiw R24,48
+ 0558 80932700          sts _data+1,R24
+ 055C                   .dbline 139
+ 055C 2AE0              ldi R18,10
+ 055E 30E0              ldi R19,0
+ 0560 00912B00          lds R16,_counter
+ 0564 10912C00          lds R17,_counter+1
+ 0568 0E940000          xcall mod16u
+ 056C 10932C00          sts _counter+1,R17
+ 0570 00932B00          sts _counter,R16
+ 0574                   .dbline 140
+ 0574 80912B00          lds R24,_counter
+ 0578 90912C00          lds R25,_counter+1
+ 057C C096              adiw R24,48
+ 057E 80932800          sts _data+2,R24
+ 0582                   .dbline 141
+ 0582 25E0              ldi R18,5
+ 0584 03E0              ldi R16,3
+ 0586 F0DD              xcall _Locate_x_y
+ 0588                   .dbline 142
+ 0588 2224              clr R2
+ 058A 20922400          sts _i,R2
+ 058E 0EC0              xjmp L110
+ 0590           L107:
+ 0590                   .dbline 143
+ 0590 80E0              ldi R24,<_data
+ 0592 90E0              ldi R25,>_data
+ 0594 E0912400          lds R30,_i
+ 0598 FF27              clr R31
+ 059A E80F              add R30,R24
+ 059C F91F              adc R31,R25
+ 059E 0081              ldd R16,z+0
+ 05A0 CCDD              xcall _Writedata
+ 05A2           L108:
+ 05A2                   .dbline 142
+ 05A2 80912400          lds R24,_i
+ 05A6 8F5F              subi R24,255    ; addi 1
+ 05A8 80932400          sts _i,R24
+ 05AC           L110:
+ 05AC                   .dbline 142
+ 05AC 80912400          lds R24,_i
+ 05B0 8330              cpi R24,3
+ 05B2 70F3              brlo L107
+ 05B4                   .dbline 144
+ 05B4 85B3              in R24,0x15
+ 05B6 8F77              andi R24,127
+ 05B8 85BB              out 0x15,R24
+ 05BA                   .dbline 145
+ 05BA 85B3              in R24,0x15
+ 05BC 8F7B              andi R24,191
+ 05BE 85BB              out 0x15,R24
+ 05C0                   .dbline 146
+ 05C0 62C0              xjmp L104
+ 05C2           L103:
+ 05C2                   .dbline 147
+ 05C2 80912300          lds R24,_flag
+ 05C6 8430              cpi R24,4
+ 05C8 09F0              breq X10
+ 05CA 5DC0              xjmp L111
+ 05CC           X10:
+ 05CC                   .dbline 148
+ 05CC                   .dbline 149
+ 05CC 2224              clr R2
+ 05CE 20922300          sts _flag,R2
+ 05D2                   .dbline 150
+ 05D2 20902200          lds R2,_green
+ 05D6 30902100          lds R3,_blue
+ 05DA 320C              add R3,R2
+ 05DC 80912000          lds R24,_red
+ 05E0 8B5F              subi R24,251    ; addi 5
+ 05E2 3816              cp R3,R24
+ 05E4 40F4              brsh L113
+ 05E6                   .dbline 151
+ 05E6 80E0              ldi R24,<L115
+ 05E8 90E0              ldi R25,>L115
+ 05EA 9983              std y+1,R25
+ 05EC 8883              std y+0,R24
+ 05EE 25E0              ldi R18,5
+ 05F0 0027              clr R16
+ 05F2 07DE              xcall _Display_x_y_data
+ 05F4 48C0              xjmp L114
+ 05F6           L113:
+ 05F6                   .dbline 152
+ 05F6 20902000          lds R2,_red
+ 05FA 80912100          lds R24,_blue
+ 05FE 885F              subi R24,248    ; addi 8
+ 0600 2816              cp R2,R24
+ 0602 78F4              brsh L116
+ 0604 20902200          lds R2,_green
+ 0608 80912100          lds R24,_blue
+ 060C 8E5F              subi R24,254    ; addi 2
+ 060E 2816              cp R2,R24
+ 0610 40F4              brsh L116
+ 0612                   .dbline 153
+ 0612 80E0              ldi R24,<L118
+ 0614 90E0              ldi R25,>L118
+ 0616 9983              std y+1,R25
+ 0618 8883              std y+0,R24
+ 061A 25E0              ldi R18,5
+ 061C 0027              clr R16
+ 061E F1DD              xcall _Display_x_y_data
+ 0620 32C0              xjmp L117
+ 0622           L116:
+ 0622                   .dbline 154
+ 0622 20902000          lds R2,_red
+ 0626 80912200          lds R24,_green
+ 062A 8350              subi R24,3
+ 062C 8215              cp R24,R2
+ 062E 78F4              brsh L119
+ 0630 20902100          lds R2,_blue
+ 0634 80912200          lds R24,_green
+ 0638 8F50              subi R24,15
+ 063A 2816              cp R2,R24
+ 063C 40F4              brsh L119
+ 063E                   .dbline 155
+ 063E 80E0              ldi R24,<L121
+ 0640 90E0              ldi R25,>L121
+ 0642 9983              std y+1,R25
+ 0644 8883              std y+0,R24
+ 0646 25E0              ldi R18,5
+ 0648 0027              clr R16
+ 064A DBDD              xcall _Display_x_y_data
+ 064C 1CC0              xjmp L120
+ 064E           L119:
+ 064E                   .dbline 156
+ 064E 20902000          lds R2,_red
+ 0652 80912200          lds R24,_green
+ 0656 8B5F              subi R24,251    ; addi 5
+ 0658 2816              cp R2,R24
+ 065A 70F4              brsh L122
+ 065C 20902100          lds R2,_blue
+ 0660 30902200          lds R3,_green
+ 0664 2314              cp R2,R3
+ 0666 40F4              brsh L122
+ 0668                   .dbline 157
+ 0668 80E0              ldi R24,<L124
+ 066A 90E0              ldi R25,>L124
+ 066C 9983              std y+1,R25
+ 066E 8883              std y+0,R24
+ 0670 25E0              ldi R18,5
+ 0672 0027              clr R16
+ 0674 C6DD              xcall _Display_x_y_data
+ 0676 07C0              xjmp L123
+ 0678           L122:
+ 0678                   .dbline 161
+ 0678 80E0              ldi R24,<L125
+ 067A 90E0              ldi R25,>L125
+ 067C 9983              std y+1,R25
+ 067E 8883              std y+0,R24
+ 0680 25E0              ldi R18,5
+ 0682 0027              clr R16
+ 0684 BEDD              xcall _Display_x_y_data
+ 0686           L123:
+ 0686           L120:
+ 0686           L117:
+ 0686           L114:
+ 0686                   .dbline 162
+ 0686           L111:
+ 0686           L104:
+ 0686           L96:
+ 0686           L88:
+ 0686                   .dbline 164
+ 0686 2224              clr R2
+ 0688 3324              clr R3
+ 068A 30922C00          sts _counter+1,R3
+ 068E 20922B00          sts _counter,R2
+ 0692                   .dbline 165
+ 0692 82E0              ldi R24,2
+ 0694 8EBD              out 0x2e,R24
+ 0696                   .dbline 166
+ 0696 83E6              ldi R24,99
+ 0698 8DBD              out 0x2d,R24
+ 069A                   .dbline 167
+ 069A 80EC              ldi R24,192
+ 069C 8CBD              out 0x2c,R24
+ 069E                   .dbline 168
+ 069E 87B7              in R24,0x37
+ 06A0 8460              ori R24,4
+ 06A2 87BF              out 0x37,R24
+ 06A4                   .dbline 169
+ 06A4 89B7              in R24,0x39
+ 06A6 8460              ori R24,4
+ 06A8 89BF              out 0x39,R24
+ 06AA                   .dbline 170
+ 06AA 7894              sei
+ 06AC                   .dbline -2
+ 06AC           L86:
+ 06AC 2296              adiw R28,2
+ 06AE 0E940000          xcall pop_lset
+ 06B2                   .dbline 0 ; func end
+ 06B2 1895              reti
+ 06B4                   .dbend
+                        .area data(ram, con, rel)
+ 002D                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 002D           L125:
+ 002D                   .blkb 5
+                        .area idata
+ 002D CEB4D6AA00        .byte 206,180,214,170,0
+                        .area data(ram, con, rel)
+ 0032                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0032           L124:
+ 0032                   .blkb 5
+                        .area idata
+ 0032 C2CCC9AB00        .byte 194,204,201,171,0
+                        .area data(ram, con, rel)
+ 0037                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0037           L121:
+ 0037                   .blkb 5
+                        .area idata
+ 0037 BBC6C9AB00        .byte 187,198,201,171,0
+                        .area data(ram, con, rel)
+ 003C                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 003C           L118:
+ 003C                   .blkb 5
+                        .area idata
+ 003C C0B6C9AB00        .byte 192,182,201,171,0
+                        .area data(ram, con, rel)
+ 0041                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0041           L115:
+ 0041                   .blkb 5
+                        .area idata
+ 0041 BAECC9AB00        .byte 186,236,201,171,0
+                        .area data(ram, con, rel)
+ 0046                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0046           L81:
+ 0046                   .blkb 11
+                        .area idata
+ 0046 C2CCC9ABB3C9B7D6A3BA00    .byte 194,204,201,171,179,201,183,214,163,186,0
+                        .area data(ram, con, rel)
+ 0051                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0051           L80:
+ 0051                   .blkb 11
+                        .area idata
+ 0051 C0B6C9ABB3C9B7D6A3BA00    .byte 192,182,201,171,179,201,183,214,163,186,0
+                        .area data(ram, con, rel)
+ 005C                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 005C           L79:
+ 005C                   .blkb 11
+                        .area idata
+ 005C BAECC9ABB3C9B7D6A3BA00    .byte 186,236,201,171,179,201,183,214,163,186,0
+                        .area data(ram, con, rel)
+ 0067                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c
+ 0067           L78:
+ 0067                   .blkb 11
+                        .area idata
+ 0067 D1D5C9ABCAB6B1F0A3BA00    .byte 209,213,201,171,202,182,177,240,163,186,0
+                        .area data(ram, con, rel)
+ 0072                   .dbfile C:\DOCUME~1\Administrator\桌面\程序\colour_identify.c

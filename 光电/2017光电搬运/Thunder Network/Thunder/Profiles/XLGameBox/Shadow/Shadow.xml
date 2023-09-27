@@ -1,0 +1,19 @@
+<Shadow>
+<pos>1</pos>
+<xl7DlgUrl></xl7DlgUrl>
+<smallFlash>
+<click>2</click>
+<param>/b_gameid 000224 /b_serverid /b_svrid /b_comefrom 201507036294743573 /b_recoveryUrl http://jump.niu.xunlei.com:8080/A3Qve2 /run</param>
+<clickUrl>http://jump.niu.xunlei.com:8080/A3Qve2</clickUrl>
+<showFlashUrl>http://i0.webgame.kanimg.com/v2boximg/config/201509/20150926112048mtrs.swf</showFlashUrl>
+<closeFlashUrl>http://i3.webgame.kanimg.com/v2boximg/config/201509/20150926112055wdcl.swf</closeFlashUrl>
+</smallFlash>
+<bigFlash>
+<showTime>10</showTime>
+<click>2</click>
+<param>/b_gameid 000224 /b_serverid /b_svrid /b_comefrom 201507031455733195 /b_recoveryUrl http://jump.niu.xunlei.com:8080/A3Qve2 /run</param>
+<clickUrl>http://act.niu.xunlei.com/2015/myztgc/</clickUrl>
+<showFlashUrl>http://i2.webgame.kanimg.com/v2boximg/config/201509/20150926112102wutf.swf</showFlashUrl>
+<closeFlashUrl>http://i3.webgame.kanimg.com/v2boximg/config/201509/20150926112108qfsn.swf</closeFlashUrl>
+</bigFlash>
+</Shadow>

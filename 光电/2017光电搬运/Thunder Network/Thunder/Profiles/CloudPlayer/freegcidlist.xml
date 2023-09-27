@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecloudplayer>
+	<cloudplayerconfig>
+		<linktext>免费不限时播放，立即体验</linktext>
+		<linkcolor>#646464</linkcolor>
+		<buttontext>立即播放</buttontext>
+	</cloudplayerconfig>
+	<gcidlist>
+		<gciditem>7AAE7143B8FFDDCF9ED4F9EB663EDDEBFA909F61</gciditem>
+		<gciditem>A90F7BECEE080CC5BD38FDA2CB96E1143F5B2311</gciditem>
+		<gciditem>F649CEEDBC66FAF0FD111C124004509C093E8691</gciditem>
+		<gciditem>1CAAEC6D99741823ED756B8A4ED7631C766D87DD</gciditem>
+		<gciditem>97A7C7A15CD54641632F4605800187A3B738A68E</gciditem>
+		<gciditem>C7C1943B590FFF781B5350A80FE28CF67FA5C8AE</gciditem>
+		<gciditem>CB3A3151E31EEA940CD358E6F7944433A3356806</gciditem>
+		<gciditem>EF3DE1C32470810D2D9D319BC9A9F719A87E3D6A</gciditem>
+		<gciditem>FCFDB628E86470ECC4FE6714E73E01DF41A1E45A</gciditem>
+	</gcidlist>
+</freecloudplayer>
